@@ -20,11 +20,13 @@ def drawAll(img, buttonList):
       x,y = button.pos
       w,h = button.size
       cv2.rectangle(img,button.pos,(x+w,y+h),(200,0,200),cv2.FILLED)
-      cv2.putText(img, button.text , (x+15,y+50), cv2.FONT_HERSHEY_COMPLEX, 1.5, (255,255,255), 2)
+      cv2.putText(img, button.text , (x+25,y+55), cv2.FONT_HERSHEY_COMPLEX, 1.5, (255,255,255), 2)
+
+    return img
 
 
 class Button():
-    def __init__(self,pos, text, size = [60,70]):
+    def __init__(self,pos, text, size = [80,70]):
         self.pos = pos
         self.size = size
         self.text = text
@@ -34,7 +36,7 @@ class Button():
 buttonList = []
 for i in range(len(keys)):
         for j, key in enumerate(keys[i]):
-           buttonList.append(Button([100 * j + 10, 100 * i +50],key))   
+           buttonList.append(Button([100 * j + 50, 100 * i +50],key))   
 
 
 while True:
@@ -50,8 +52,7 @@ while True:
         lmList = hand["lmList"]  # List of 21 hand landmarks
         bbox = hand["bbox"]   
 
-   
-    #img = myButton.draw(img)
+    img = drawAll(img,buttonList)
     # Display the image
     cv2.imshow("Image", img)
 
