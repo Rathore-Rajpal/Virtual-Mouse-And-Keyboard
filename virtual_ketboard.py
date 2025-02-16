@@ -15,19 +15,26 @@ keys = [
     ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";"],
     ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/"]
 ]
+finalText = ""
 
 # Function to draw all buttons on the image
 def drawAll(img, buttonList):
     for button in buttonList:
         x, y = button.pos
         w, h = button.size
-        cv2.rectangle(img, button.pos, (x + w, y + h), (200, 0, 200), cv2.FILLED)
-        cv2.putText(img, button.text, (x + 25, y + 55), cv2.FONT_HERSHEY_COMPLEX, 1.5, (255, 255, 255), 2)
+        # Draw button background with a slight shadow
+        cv2.rectangle(img, (x + 5, y + 5), (x + w + 5, y + h + 5), (50, 50, 50), cv2.FILLED)  # Shadow
+        cv2.rectangle(img, button.pos, (x + w, y + h), (200, 0, 200), cv2.FILLED)  # Button itself
+        # Center the text
+        text_size = cv2.getTextSize(button.text, cv2.FONT_HERSHEY_COMPLEX, 1.2, 2)[0]  # Adjust text size
+        text_x = x + (w - text_size[0]) // 2
+        text_y = y + (h + text_size[1]) // 2
+        cv2.putText(img, button.text, (text_x, text_y), cv2.FONT_HERSHEY_COMPLEX, 1.2, (255, 255, 255), 2)
     return img
 
 # Button class to define each key's properties
 class Button:
-    def __init__(self, pos, text, size=[80, 70]):
+    def __init__(self, pos, text, size=[75, 65]):  # Reduced size for smaller buttons
         self.pos = pos
         self.size = size
         self.text = text
@@ -36,7 +43,7 @@ class Button:
 buttonList = []
 for i in range(len(keys)):
     for j, key in enumerate(keys[i]):
-        buttonList.append(Button([100 * j + 50, 100 * i + 50], key))
+        buttonList.append(Button([90 * j + 50, 90 * i + 150], key))  # Reduced spacing between buttons
 
 # Main loop
 while True:
@@ -67,20 +74,26 @@ while True:
             # Check if the index finger tip (landmark 8) is over the button
             if x < lmList[8][0] < x + w and y < lmList[8][1] < y + h:
                 # Highlight the button
-                cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
-                cv2.putText(img, button.text, (x + 25, y + 55), cv2.FONT_HERSHEY_COMPLEX, 1.5, (255, 255, 255), 2)
+                cv2.rectangle(img, button.pos, (x + w, y + h), (175, 0, 175), cv2.FILLED)
+                cv2.putText(img, button.text, (x + 25, y + 55), cv2.FONT_HERSHEY_COMPLEX, 1.2, (255, 255, 255), 2)
 
                 # Get only x,y coordinates (ignore z-axis)
                 p8 = lmList[8][0:2]  # Index finger tip (x, y)
-                p12 = lmList[12][0:2]  # Middle finger tip (x, y)
+                p4 = lmList[4][0:2]  # Thumb finger tip (x, y)
 
-                # Calculate distance between index and middle finger tips
-                length, _, _ = detector.findDistance(p8, p12, img)
-                print(f"Distance between fingers: {length}")
+                # Calculate distance between thumb and index finger tips
+                length, _, _ = detector.findDistance(p8, p4, img)
+                print(f"Distance between thumb and index finger: {length}")
 
-                # Optional: Add logic to trigger a key press when fingers are close
-                if length < 30:  # Adjust this threshold as needed
-                    print(f"Button {button.text} pressed!")
+                # Detect click when thumb and index finger tips are close enough
+                if length < 35:  # Adjust this threshold as needed
+                    cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
+                    cv2.putText(img, button.text, (x + 25, y + 55), cv2.FONT_HERSHEY_COMPLEX, 1.2, (255, 255, 255), 2)
+                    finalText += button.text
+
+    # Draw the text box below
+    cv2.rectangle(img, (50, 500), (1180, 600), (0, 255, 0), cv2.FILLED)  # Make the box wider to fit more text
+    cv2.putText(img, finalText, (60, 570), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 255, 255), 3)  # Adjust font size and position
 
     # Display the image
     cv2.imshow("Virtual Keyboard", img)
