@@ -1,5 +1,7 @@
 import cv2
 from cvzone.HandTrackingModule import HandDetector
+from time import sleep
+from pynput.keyboard import Controller
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)
@@ -9,13 +11,17 @@ cap.set(4, 720)   # Set height
 # Initialize hand detector
 detector = HandDetector(detectionCon=0.8)
 
-# Define the keyboard layout
+# Define the expanded keyboard layout
 keys = [
-    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
-    ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";"],
-    ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/"]
+    ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="],
+    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]"],
+    ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "\\"],
+    ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "Shift"],
+    ["Space", "Enter", "Backspace"]
 ]
+
 finalText = ""
+keyboard = Controller()
 
 # Function to draw all buttons on the image
 def drawAll(img, buttonList):
@@ -34,7 +40,7 @@ def drawAll(img, buttonList):
 
 # Button class to define each key's properties
 class Button:
-    def __init__(self, pos, text, size=[75, 65]):  # Reduced size for smaller buttons
+    def __init__(self, pos, text, size=[85, 65]):  # Slightly smaller buttons
         self.pos = pos
         self.size = size
         self.text = text
@@ -43,7 +49,13 @@ class Button:
 buttonList = []
 for i in range(len(keys)):
     for j, key in enumerate(keys[i]):
-        buttonList.append(Button([90 * j + 50, 90 * i + 150], key))  # Reduced spacing between buttons
+        # Adjust button width for Space, Enter, and Backspace
+        if key == "Space":
+            buttonList.append(Button([90 * j + 50, 90 * i + 150], key, size=[500, 65]))  # Wider space bar
+        elif key == "Enter" or key == "Backspace":
+            buttonList.append(Button([90 * j + 50, 90 * i + 150], key, size=[170, 65]))  # Wider Enter and Backspace
+        else:
+            buttonList.append(Button([90 * j + 50, 90 * i + 150], key))  # Default button size
 
 # Main loop
 while True:
@@ -87,12 +99,21 @@ while True:
 
                 # Detect click when thumb and index finger tips are close enough
                 if length < 35:  # Adjust this threshold as needed
+                    keyboard.press(button.text)
                     cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
                     cv2.putText(img, button.text, (x + 25, y + 55), cv2.FONT_HERSHEY_COMPLEX, 1.2, (255, 255, 255), 2)
-                    finalText += button.text
+                    if button.text == "Space":
+                        finalText += " "
+                    elif button.text == "Enter":
+                        finalText += "\n"
+                    elif button.text == "Backspace":
+                        finalText = finalText[:-1]
+                    else:
+                        finalText += button.text
+                    sleep(0.25)
 
     # Draw the text box below
-    cv2.rectangle(img, (50, 500), (1180, 600), (0, 255, 0), cv2.FILLED)  # Make the box wider to fit more text
+    cv2.rectangle(img, (50, 500), (1180, 600), (175, 0, 175), cv2.FILLED)  # Make the box wider to fit more text
     cv2.putText(img, finalText, (60, 570), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 255, 255), 3)  # Adjust font size and position
 
     # Display the image
