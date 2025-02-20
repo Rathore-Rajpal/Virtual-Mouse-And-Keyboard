@@ -95,10 +95,10 @@ while True:
 
                 # Calculate distance between thumb and index finger tips
                 length, _, _ = detector.findDistance(p8, p4, img)
-                print(f"Distance between thumb and index finger: {length}")
+                #print(f"Distance between thumb and index finger: {length}")
 
                 # Detect click when thumb and index finger tips are close enough
-                if length < 35:  # Adjust this threshold as needed
+                if length < 30:  # Adjust this threshold as needed
                     # Handle special keys like Space, Enter, Shift, and Backspace separately
                     if button.text == "Space":
                         finalText += " "
