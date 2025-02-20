@@ -5,7 +5,7 @@ from pynput.keyboard import Controller
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)
-cap.set(3, 1280)  # Set width
+cap.set(3, 1580)  # Set width
 cap.set(4, 720)   # Set height
 
 # Initialize hand detector
@@ -14,10 +14,10 @@ detector = HandDetector(detectionCon=0.8)
 # Define the expanded keyboard layout
 keys = [
     ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "-", "="],
-    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "[", "]"],
-    ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "'", "\\"],
-    ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "Shift"],
-    ["Space", "Enter", "Backspace"]
+    ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P", "BS"],
+    ["A", "S", "D", "F", "G", "H", "J", "K", "L", ";", "Shift"],
+    ["Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "Enter"],
+    ["Space"]
 ]
 
 finalText = ""
@@ -52,7 +52,7 @@ for i in range(len(keys)):
         # Adjust button width for Space, Enter, and Backspace
         if key == "Space":
             buttonList.append(Button([90 * j + 50, 90 * i + 150], key, size=[500, 65]))  # Wider space bar
-        elif key == "Enter" or key == "Backspace":
+        elif key == "Enter" or key == "BS" or key == "Shift":
             buttonList.append(Button([90 * j + 50, 90 * i + 150], key, size=[170, 65]))  # Wider Enter and Backspace
         else:
             buttonList.append(Button([90 * j + 50, 90 * i + 150], key))  # Default button size
@@ -99,22 +99,27 @@ while True:
 
                 # Detect click when thumb and index finger tips are close enough
                 if length < 35:  # Adjust this threshold as needed
-                    keyboard.press(button.text)
-                    cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
-                    cv2.putText(img, button.text, (x + 25, y + 55), cv2.FONT_HERSHEY_COMPLEX, 1.2, (255, 255, 255), 2)
+                    # Handle special keys like Space, Enter, Shift, and Backspace separately
                     if button.text == "Space":
                         finalText += " "
                     elif button.text == "Enter":
                         finalText += "\n"
-                    elif button.text == "Backspace":
+                    elif button.text == "BS":
                         finalText = finalText[:-1]
+                    elif button.text == "Shift":
+                        # Optional: Implement Shift key functionality, if needed
+                        pass
                     else:
                         finalText += button.text
-                    sleep(0.25)
 
-    # Draw the text box below
-    cv2.rectangle(img, (50, 500), (1180, 600), (175, 0, 175), cv2.FILLED)  # Make the box wider to fit more text
-    cv2.putText(img, finalText, (60, 570), cv2.FONT_HERSHEY_COMPLEX, 2, (255, 255, 255), 3)  # Adjust font size and position
+                    # Press the key using pynput only for normal characters
+                    if button.text not in ["Space", "Enter", "BS", "Shift"]:
+                        keyboard.press(button.text)
+
+                    # Change button color to green after click
+                    cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
+                    cv2.putText(img, button.text, (x + 25, y + 55), cv2.FONT_HERSHEY_COMPLEX, 1.2, (255, 255, 255), 2)
+                    sleep(0.25)
 
     # Display the image
     cv2.imshow("Virtual Keyboard", img)
