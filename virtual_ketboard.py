@@ -29,13 +29,13 @@ def drawAll(img, buttonList):
         x, y = button.pos
         w, h = button.size
         # Draw button background with a slight shadow
-        cv2.rectangle(img, (x + 5, y + 5), (x + w + 5, y + h + 5), (50, 50, 50), cv2.FILLED)  # Shadow
-        cv2.rectangle(img, button.pos, (x + w, y + h), (200, 0, 200), cv2.FILLED)  # Button itself
+        cv2.rectangle(img, (x + 5, y + 5), (x + w + 5, y + h + 5), (30, 30, 30), cv2.FILLED)  # Shadow
+        cv2.rectangle(img, button.pos, (x + w, y + h), (70, 70, 70), cv2.FILLED)  # Button itself (dark gray)
         # Center the text
         text_size = cv2.getTextSize(button.text, cv2.FONT_HERSHEY_COMPLEX, 1.2, 2)[0]  # Adjust text size
         text_x = x + (w - text_size[0]) // 2
         text_y = y + (h + text_size[1]) // 2
-        cv2.putText(img, button.text, (text_x, text_y), cv2.FONT_HERSHEY_COMPLEX, 1.2, (255, 255, 255), 2)
+        cv2.putText(img, button.text, (text_x, text_y), cv2.FONT_HERSHEY_COMPLEX, 1.2, (255, 255, 255), 2)  # White text
     return img
 
 # Button class to define each key's properties
@@ -86,8 +86,8 @@ while True:
             # Check if the index finger tip (landmark 8) is over the button
             if x < lmList[8][0] < x + w and y < lmList[8][1] < y + h:
                 # Highlight the button
-                cv2.rectangle(img, button.pos, (x + w, y + h), (175, 0, 175), cv2.FILLED)
-                cv2.putText(img, button.text, (x + 25, y + 55), cv2.FONT_HERSHEY_COMPLEX, 1.2, (255, 255, 255), 2)
+                cv2.rectangle(img, button.pos, (x + w, y + h), (100, 100, 255), cv2.FILLED)  # Highlight color (light purple)
+                cv2.putText(img, button.text, (x + 25, y + 55), cv2.FONT_HERSHEY_COMPLEX, 1.2, (255, 255, 255), 2)  # White text
 
                 # Get only x,y coordinates (ignore z-axis)
                 p8 = lmList[8][0:2]  # Index finger tip (x, y)
