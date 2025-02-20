@@ -1,7 +1,7 @@
 import cv2
 from cvzone.HandTrackingModule import HandDetector
 from time import sleep
-from pynput.keyboard import Controller
+from pynput.keyboard import Controller, Key
 
 # Initialize webcam
 cap = cv2.VideoCapture(0)
@@ -102,19 +102,23 @@ while True:
                     # Handle special keys like Space, Enter, Shift, and Backspace separately
                     if button.text == "Space":
                         finalText += " "
+                        keyboard.press(Key.space)
+                        keyboard.release(Key.space)
                     elif button.text == "Enter":
                         finalText += "\n"
+                        keyboard.press(Key.enter)
+                        keyboard.release(Key.enter)
                     elif button.text == "BS":
                         finalText = finalText[:-1]
+                        keyboard.press(Key.backspace)
+                        keyboard.release(Key.backspace)
                     elif button.text == "Shift":
                         # Optional: Implement Shift key functionality, if needed
                         pass
                     else:
-                        finalText += button.text
-
-                    # Press the key using pynput only for normal characters
-                    if button.text not in ["Space", "Enter", "BS", "Shift"]:
                         keyboard.press(button.text)
+                        keyboard.release(button.text)
+                        finalText += button.text
 
                     # Change button color to green after click
                     cv2.rectangle(img, button.pos, (x + w, y + h), (0, 255, 0), cv2.FILLED)
