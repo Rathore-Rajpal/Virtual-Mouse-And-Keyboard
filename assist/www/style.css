@@ -4,13 +4,14 @@ body{
     overflow-x: hidden;
 }
 
-.square{
+.square {
     position: relative;
     width: 400px;
     height: 400px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 100px; /* Adjust this value to move the circular design down */
 }
 
 .square span:nth-child(1){
