@@ -2,6 +2,7 @@ import os
 import eel
 import time
 from assist.Engine.features import *
+from assist.Engine.commands import *
 
 # Initialize eel with the correct path to the 'www' folder
 eel.init("assist/www")
