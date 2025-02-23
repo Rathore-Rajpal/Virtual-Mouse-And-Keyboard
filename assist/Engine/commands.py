@@ -49,7 +49,8 @@ def allCommands():
         openCommand(query)
     else:
         print("not run")
-    eel.shoHood()
+
+    eel.ShowHood()
 
 
 
