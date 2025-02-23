@@ -34,4 +34,13 @@ $(document).ready(function () {
             sync: true,
         },
     })
+
+    //mic button click event
+
+    $("#MicBtn").click(function (e) { 
+        eel.playMicSound()
+        $("#oval").attr("hidden",true);
+        $("#siriwave").attr("hidden",false);
+        
+    });
 });
