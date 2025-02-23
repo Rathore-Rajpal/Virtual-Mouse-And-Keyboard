@@ -158,3 +158,9 @@ h5{
         background-position: 0 0;
     }
 }
+
+p{
+    position: relative;
+    top: 200px;
+    left: 220px;
+}

@@ -25,42 +25,61 @@
 </head>
 
 <body>
-    <section id="oval" class="md-4">
-        <div class="row">
-            <div class="col-md-1"></div>
-            <div class="col-md-10">
-                <div class="d-flex justify-content-center align-tems-center" style="height:80vh;">
-                    <canvas id="canvasOne" height="485" width="700" style="position: absolute;"></canvas>
-                    <div id="jarvisHood">
-                        <div class="square">
+    <div class="container">
+        <section id="oval" class="md-4" hidden>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="d-flex justify-content-center align-tems-center" style="height:80vh;">
+                        <canvas id="canvasOne" height="485" width="700" style="position: absolute;"></canvas>
+                        <div id="jarvisHood">
+                            <div class="square">
 
-                            <span class="circle"></span>
-                            <span class="circle"></span>
-                            <span class="circle"></span>
+                                <span class="circle"></span>
+                                <span class="circle"></span>
+                                <span class="circle"></span>
+
+                            </div>
 
                         </div>
+                    </div>
+                    <h5 class="text-light text text-center">Ask me anything</h5>
 
+                    <div class="col-md-12 mt-4 pt-4">
+                        <div class="text-center">
+                            <div id="TextInput" class="d-flex">
+                                <input type="text" class="input-field" name="chatbox" id="chatbox"
+                                    placeholder="Type here..">
+                                <button id="MicBtn" class="glow-on-hover"><i class="bi bi-mic-fill"></i></button>
+                                <button id="ChatBtn" class="glow-on-hover"><i class="bi bi-chat-dots-fill"></i></button>
+                                <button id="SettingsBtn" class="glow-on-hover"><i class="bi bi-gear-fill"></i></button>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
-                <h5 class="text-light text text-center">Ask me anything</h5>
+                <div class="col-md-1"></div>
+            </div>
 
-                <div class="col-md-12 mt-4 pt-4">
-                    <div class="text-center">
-                        <div id="TextInput" class="d-flex">
-                            <input type="text" class="input-field" name="chatbox" id="chatbox"
-                                placeholder="Type here..">
-                            <button id="MicBtn" class="glow-on-hover"><i class="bi bi-mic-fill"></i></button>
-                            <button id="ChatBtn" class="glow-on-hover"><i class="bi bi-chat-dots-fill"></i></button>
-                            <button id="SettingsBtn" class="glow-on-hover"><i class="bi bi-gear-fill"></i></button>
+        </section>
+        <section id="siriwave" class="md-4">
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="d-flex justify-content-center align-tems-center" style="height: 100vh;">
+                            <div class="">
+                                <p class = "text-start text-light mb-4 siri-message">Hello world how are youy doing hope you are doing good</p>
+                                <div id="siri-container"></div>
+                            </div>
+
                         </div>
-
                     </div>
                 </div>
             </div>
-            <div class="col-md-1"></div>
-        </div>
 
-    </section>
+        </section>
+    </div>
     <!--Jquery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
@@ -79,6 +98,10 @@
     <script src="assets/vendors/textillate-master/jquery.textillate.js"></script>
     <script src="assets/vendors/textillate-master/assets/jquery.fittext.js"></script>
     <script src="assets/vendors/textillate-master/assets/jquery.lettering.js"></script>
+
+    <!--SiriWave -->
+    <script src="https://unpkg.com/siriwave/dist/siriwave.umd.min.js"></script>
+
     <!-- Texllate -->
     <script src="http://jschr.github.io/textillate/jquery.textillate.js"></script>
     <script src="main.js"></script>
