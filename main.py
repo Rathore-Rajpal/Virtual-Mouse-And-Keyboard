@@ -1,8 +1,12 @@
 import os
 import eel
+import time
+from assist.Engine.features import *
 
 # Initialize eel with the correct path to the 'www' folder
 eel.init("assist/www")
+
+playAssistantSound()
 
 # Launch Microsoft Edge in app mode
 os.system('start msedge.exe --app="http://localhost:8000/index.html"')

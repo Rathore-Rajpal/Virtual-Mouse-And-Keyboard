@@ -1,4 +1,4 @@
-import playsound as playsound
+from playsound import playsound
 
 #playing assistant sound function.
 def playAssistantSound():
