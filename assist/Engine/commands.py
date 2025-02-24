@@ -47,6 +47,10 @@ def allCommands():
     if "open" in query:
         from assist.Engine.features import openCommand
         openCommand(query)
+    elif "on youtube":
+        from assist.Engine.features import PlayYoutube
+        PlayYoutube(query)
+
     else:
         print("not run")
 
