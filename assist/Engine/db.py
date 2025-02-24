@@ -1,7 +1,6 @@
 import sqlite3
 
 conn = sqlite3.connect("buddy.db")
-
 cursor = conn.cursor()
 
 #query = "CREATE TABLE IF NOT EXISTS sys_command(id integer primary key, name VAR(100), path VARCHAR(1000))"
