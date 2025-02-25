@@ -19,7 +19,7 @@ def takecommand():
     with sr.Microphone() as source:
         print("Listning")
         eel.DisplayMessage('Listning...')
-        r.pause_threshold= 1
+        r.pause_threshold = 1
         r.adjust_for_ambient_noise(source)
 
         audio = r.listen(source, 10, 6)
@@ -41,19 +41,23 @@ def takecommand():
 
 @eel.expose 
 def allCommands():
-    query = takecommand()
-    print(query)
 
-    if "open" in query:
-        from assist.Engine.features import openCommand
-        openCommand(query)
-    elif "on youtube":
-        from assist.Engine.features import PlayYoutube
-        PlayYoutube(query)
+    try:
+        query = takecommand()
+        print(query)
 
-    else:
-        print("not run")
+        if "open" in query:
+            from assist.Engine.features import openCommand
+            openCommand(query)
+        elif "on youtube":
+            from assist.Engine.features import PlayYoutube
+            PlayYoutube(query)
 
+        else:
+            print("not run")
+    except:
+        print("error")
+        
     eel.ShowHood()
 
 
