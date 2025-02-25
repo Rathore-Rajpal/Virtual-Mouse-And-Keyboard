@@ -10,7 +10,7 @@ from assist.Engine.config import ASSISTANT_NAME
 import os
 import pywhatkit as kit 
 from assist.Engine.commands import speak
-from assist.Engine.helper import extract_yt_term
+from assist.Engine.helper import extract_yt_term, remove_words
 import pvporcupine
 import pyaudio
 
@@ -132,3 +132,24 @@ def hotword():
             audio_stream.close()
         if paud is not None:
             paud.terminate()
+            
+#Find Contacts
+def findContact(query):
+    
+    
+    words_to_remove = [ASSISTANT_NAME, 'make', 'a', 'to', 'phone', 'call', 'send', 'message', 'wahtsapp', 'video']
+    query = remove_words(query, words_to_remove)
+
+    try:
+        query = query.strip().lower()
+        cursor.execute("SELECT mobile_no FROM contacts WHERE LOWER(name) LIKE ? OR LOWER(name) LIKE ?", ('%' + query + '%', query + '%'))
+        results = cursor.fetchall()
+        print(results[0][0])
+        mobile_number_str = str(results[0][0])
+        if not mobile_number_str.startswith('+91'):
+            mobile_number_str = '+91' + mobile_number_str
+
+        return mobile_number_str, query
+    except:
+        speak('not exist in contacts')
+        return 0, 0

@@ -61,11 +61,35 @@ cursor = conn.cursor()
 #conn.commit()
 #conn.close()
 
-#query = "INSERT INTO contacts VALUES (null,'Shweta','917020264223','')"
-#cursor.execute(query)
-#conn.commit()
-
-query = "INSERT INTO contacts VALUES (null,'raj','9175442260','')"
+query = "INSERT INTO contacts VALUES (null,'Shweta','+917020264223','')"
 cursor.execute(query)
 conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'raj','+919175442260','')"
+cursor.execute(query)
+conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'Arya','+918010645336','')"
+cursor.execute(query)
+conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'Ritesh','+918530778124','')"
+cursor.execute(query)
+conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'Yash','+918731809331','')"
+cursor.execute(query)
+conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'Ayush','+918943078101','')"
+cursor.execute(query)
+conn.commit
+
+#SEARCHING
+#query = 'Shweta'
+#query = query.strip().lower()
+
+#cursor.execute("SELECT mobile_no FROM contacts WHERE LOWER(name) LIKE ? OR LOWER(name) LIKE ?", ('%' + query + '%', query + '%'))
+#results = cursor.fetchall()
+#print(results[0][0])
 
