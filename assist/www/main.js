@@ -53,6 +53,47 @@ $(document).ready(function () {
         }
     }
     document.addEventListener('keyup', doc_keyUp, false);
+
+    function PlayAssistant(message) {
+
+        if (message != "") {
+
+            $("#oval").attr("hidden", true);
+            $("#siriwave").attr("hidden", false);
+            eel.allCommands(message);
+            $("#chatbox").val("")
+            $("#MicBtn").attr('hidden', false);
+            $("#SendBtn").attr('hidden', true);
+
+        }
+
+    }
+
+    function ShowHideButton(message) {
+        if (message.length == 0) {
+            $("#MicBtn").attr('hidden', false);
+            $("#SendBtn").attr('hidden', true);
+        }
+        else {
+            $("#MicBtn").attr('hidden', true);
+            $("#SendBtn").attr('hidden', false);
+        }
+    }
+
+    $("#chatbox").keyup(function () {
+
+        let message = $("#chatbox").val();
+        ShowHideButton(message)
+    
+    });
+    
+    // send button event handler
+    $("#SendBtn").click(function () {
+    
+        let message = $("#chatbox").val()
+        PlayAssistant(message)
+    
+    });
     
 
 });

@@ -40,7 +40,13 @@ def takecommand():
 #speak(text)
 
 @eel.expose 
-def allCommands():
+def allCommands(message=1):
+    
+    if message == 1:
+        query = takecommand()
+        print(query)
+    else:
+        query = message
     try:
         query = takecommand()
         print(f"Query received: {query}")  # Debugging statement
