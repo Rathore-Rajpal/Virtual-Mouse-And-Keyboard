@@ -1,6 +1,8 @@
 import re
+from shlex import quote
 import sqlite3
 import struct
+import subprocess
 import time
 import webbrowser
 from playsound import playsound
@@ -153,3 +155,41 @@ def findContact(query):
     except:
         speak('not exist in contacts')
         return 0, 0
+    
+def whatsApp(mobile_no, message, flag, name):
+
+    if flag == 'message':
+        target_tab = 12
+        jarvis_message = "message send successfully to "+name
+
+    elif flag == 'call':
+        target_tab = 7
+        message = ''
+        jarvis_message = "calling to "+name
+
+    else:
+        target_tab = 6
+        message = ''
+        jarvis_message = "staring video call with "+name
+
+    # Encode the message for URL
+    encoded_message = quote(message)
+
+    # Construct the URL
+    whatsapp_url = f"whatsapp://send?phone={mobile_no}&text={encoded_message}"
+
+    # Construct the full command
+    full_command = f'start "" "{whatsapp_url}"'
+
+    # Open WhatsApp with the constructed URL using cmd.exe
+    subprocess.run(full_command, shell=True)
+    time.sleep(5)
+    subprocess.run(full_command, shell=True)
+    
+    pyautogui.hotkey('ctrl', 'f')
+
+    for i in range(1, target_tab):
+        pyautogui.hotkey('tab')
+
+    pyautogui.hotkey('enter')
+    speak(jarvis_message)

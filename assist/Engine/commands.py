@@ -49,9 +49,26 @@ def allCommands():
         if "open" in query:
             from assist.Engine.features import openCommand
             openCommand(query)
-        elif "on youtube":
+        elif "on youtube in query":
             from assist.Engine.features import PlayYoutube
             PlayYoutube(query)
+        elif "send message" in query or "phone call" in query or "video call" in query:
+            from assist.Engine.features import findContact, whatsApp
+            flag = ""
+            contact_no, name = findContact(query)
+            if(contact_no != 0):
+
+                if "send message" in query:
+                    flag = 'message'
+                    speak("what message to send")
+                    query = takecommand()
+                    
+                elif "phone call" in query:
+                    flag = 'call'
+                else:
+                    flag = 'video call'
+                    
+                whatsApp(contact_no, query, flag, name)
 
         else:
             print("not run")

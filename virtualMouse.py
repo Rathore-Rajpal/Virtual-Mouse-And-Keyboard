@@ -103,7 +103,7 @@ def detect_gestures(frame, landmarks_list, processed):
             cv2.putText(frame, "Drawing Mode On", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         else:
             drawing_mode = False
-            cv2.putText(frame, "Drawing Mode Off", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            #cv2.putText(frame, "Drawing Mode Off", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
         # Close window gesture: thumb and ring finger tips touching
         if functions.is_close_window_gesture(landmarks_list):
