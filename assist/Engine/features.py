@@ -137,59 +137,80 @@ def hotword():
             
 #Find Contacts
 def findContact(query):
-    
-    
     words_to_remove = [ASSISTANT_NAME, 'make', 'a', 'to', 'phone', 'call', 'send', 'message', 'wahtsapp', 'video']
     query = remove_words(query, words_to_remove)
-
+    
     try:
+        # Strip and lowercase the query
         query = query.strip().lower()
-        cursor.execute("SELECT mobile_no FROM contacts WHERE LOWER(name) LIKE ? OR LOWER(name) LIKE ?", ('%' + query + '%', query + '%'))
-        results = cursor.fetchall()
-        print(results[0][0])
-        mobile_number_str = str(results[0][0])
-        if not mobile_number_str.startswith('+91'):
-            mobile_number_str = '+91' + mobile_number_str
+        
+        # Split to get the first word of the query
+        first_word_query = query.split()[0]
 
-        return mobile_number_str, query
-    except:
+        # Execute the SQL query to search for contacts with the first word, case-insensitive
+        cursor.execute("""
+            SELECT mobile_no FROM contacts 
+            WHERE LOWER(SUBSTR(name, 1, LENGTH(?))) = ?
+        """, (first_word_query, first_word_query))
+        
+        results = cursor.fetchall()
+
+        # If a result is found, format the mobile number
+        if results:
+            mobile_number_str = str(results[0][0])
+            if not mobile_number_str.startswith('+91'):
+                mobile_number_str = '+91' + mobile_number_str
+
+            return mobile_number_str, query
+        else:
+            speak('not exist in contacts')
+            return 0, 0
+
+    except Exception as e:
+        print(f"Error in findContact: {e}")
         speak('not exist in contacts')
         return 0, 0
+
     
 def whatsApp(mobile_no, message, flag, name):
+    try:
+        if flag == 'message':
+            target_tab = 15
+            jarvis_message = "Message sent successfully to " + name
 
-    if flag == 'message':
-        target_tab = 12
-        jarvis_message = "message send successfully to "+name
+        elif flag == 'call':
+            target_tab = 7
+            message = ''
+            jarvis_message = "Calling " + name
 
-    elif flag == 'call':
-        target_tab = 7
-        message = ''
-        jarvis_message = "calling to "+name
+        else:
+            target_tab = 6
+            message = ''
+            jarvis_message = "Starting video call with " + name
 
-    else:
-        target_tab = 6
-        message = ''
-        jarvis_message = "staring video call with "+name
+        # Encode the message for URL
+        encoded_message = quote(message)
 
-    # Encode the message for URL
-    encoded_message = quote(message)
+        # Construct the URL
+        whatsapp_url = f"whatsapp://send?phone={mobile_no}&text={encoded_message}"
 
-    # Construct the URL
-    whatsapp_url = f"whatsapp://send?phone={mobile_no}&text={encoded_message}"
+        # Debugging: Print the constructed URL
+        print(f"Constructed WhatsApp URL: {whatsapp_url}")
 
-    # Construct the full command
-    full_command = f'start "" "{whatsapp_url}"'
+        # Open WhatsApp with the constructed URL using cmd.exe
+        subprocess.run(f'start "" "{whatsapp_url}"', shell=True)
 
-    # Open WhatsApp with the constructed URL using cmd.exe
-    subprocess.run(full_command, shell=True)
-    time.sleep(5)
-    subprocess.run(full_command, shell=True)
+        # Wait for WhatsApp to open and switch to correct tab
+        time.sleep(5)  # Adjust the delay as necessary
+        
+        # Simulate tabbing to the target option
+        pyautogui.hotkey('ctrl', 'f')
+        for i in range(1, target_tab):
+            pyautogui.hotkey('tab')
+        pyautogui.hotkey('enter')
+
+        # Speak confirmation message
+        speak(jarvis_message)
     
-    pyautogui.hotkey('ctrl', 'f')
-
-    for i in range(1, target_tab):
-        pyautogui.hotkey('tab')
-
-    pyautogui.hotkey('enter')
-    speak(jarvis_message)
+    except Exception as e:
+        print(f"Error in WhatsApp function: {e}")

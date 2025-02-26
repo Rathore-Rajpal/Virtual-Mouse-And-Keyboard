@@ -61,29 +61,7 @@ cursor = conn.cursor()
 #conn.commit()
 #conn.close()
 
-query = "INSERT INTO contacts VALUES (null,'Shweta','+917020264223','')"
-cursor.execute(query)
-conn.commit()
 
-query = "INSERT INTO contacts VALUES (null,'raj','+919175442260','')"
-cursor.execute(query)
-conn.commit()
-
-query = "INSERT INTO contacts VALUES (null,'Arya','+918010645336','')"
-cursor.execute(query)
-conn.commit()
-
-query = "INSERT INTO contacts VALUES (null,'Ritesh','+918530778124','')"
-cursor.execute(query)
-conn.commit()
-
-query = "INSERT INTO contacts VALUES (null,'Yash','+918731809331','')"
-cursor.execute(query)
-conn.commit()
-
-query = "INSERT INTO contacts VALUES (null,'Ayush','+918943078101','')"
-cursor.execute(query)
-conn.commit
 
 #SEARCHING
 #query = 'Shweta'
@@ -93,3 +71,34 @@ conn.commit
 #results = cursor.fetchall()
 #print(results[0][0])
 
+#query = "DELETE FROM contacts"
+#cursor.execute(query)
+#conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'Shweta Verma','7020264223','')"
+cursor.execute(query)
+conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'raj','9175442260','')"
+cursor.execute(query)
+conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'Arya Rai','8010645336','')"
+cursor.execute(query)
+conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'Ritesh Sable','8530778124','')"
+cursor.execute(query)
+conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'Yash Padwal','8731809331','')"
+cursor.execute(query)
+conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'Ayush','8943078101','')"
+cursor.execute(query)
+conn.commit
+
+query = "INSERT INTO contacts VALUES (null,'Sister','6377281524','')"
+cursor.execute(query)
+conn.commit()

@@ -41,41 +41,50 @@ def takecommand():
 
 @eel.expose 
 def allCommands():
-
     try:
         query = takecommand()
-        print(query)
+        print(f"Query received: {query}")  # Debugging statement
 
         if "open" in query:
+            print("Handling 'open' command")  # Debugging statement
             from assist.Engine.features import openCommand
             openCommand(query)
-        elif "on youtube in query":
-            from assist.Engine.features import PlayYoutube
-            PlayYoutube(query)
-        elif "send message" in query or "phone call" in query or "video call" in query:
+            
+        elif "send message" in query or "send message" in query or "phone call" in query or "video call" in query:
+            print("Handling WhatsApp command")  # Debugging statement
             from assist.Engine.features import findContact, whatsApp
             flag = ""
-            contact_no, name = findContact(query)
-            if(contact_no != 0):
 
+            # Call findContact and print result
+            contact_no, name = findContact(query)
+            print(f"Contact number: {contact_no}, Name: {name}")  # Debugging statement
+
+            if contact_no != 0:
                 if "send message" in query:
                     flag = 'message'
-                    speak("what message to send")
+                    speak("What message to send?")
                     query = takecommand()
+                    print(f"Message to send: {query}")  # Debugging statement
                     
                 elif "phone call" in query:
                     flag = 'call'
+                    
                 else:
                     flag = 'video call'
-                    
+
+                # Call whatsApp method and print status
+                print(f"Calling whatsApp() with number: {contact_no}, message: {query}, flag: {flag}, name: {name}")
                 whatsApp(contact_no, query, flag, name)
+            else:
+                print("Contact not found!")  # Debugging statement
 
         else:
-            print("not run")
-    except:
-        print("error")
+            print("Command not recognized")  # Debugging statement
+
+    except Exception as e:
+        print(f"Error in allCommands: {e}")  # Detailed error message for debugging
         
-    eel.ShowHood()
+    eel.ShowHood()  # Ensure this is called even if an error occurs
 
 
 
