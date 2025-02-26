@@ -47,6 +47,7 @@ def allCommands(message=1):
         print(query)
     else:
         query = message
+        
     try:
         query = takecommand()
         print(f"Query received: {query}")  # Debugging statement
