@@ -175,7 +175,7 @@ def findContact(query):
 def whatsApp(mobile_no, message, flag, name):
     try:
         if flag == 'message':
-            target_tab = 15
+            target_tab = 12
             jarvis_message = "Message sent successfully to " + name
 
         elif flag == 'call':

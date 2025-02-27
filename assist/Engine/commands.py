@@ -44,20 +44,23 @@ def allCommands(message=1):
     
     if message == 1:
         query = takecommand()
-        print(query)
+        print(f"Query received: {query}") # Debugging statement
     else:
         query = message
         
     try:
-        query = takecommand()
-        print(f"Query received: {query}")  # Debugging statement
+        
 
         if "open" in query:
             print("Handling 'open' command")  # Debugging statement
             from assist.Engine.features import openCommand
             openCommand(query)
             
-        elif "send message" in query or "send message" in query or "phone call" in query or "video call" in query:
+        elif "on youtube" in query:
+            from assist.Engine.features import PlayYoutube
+            PlayYoutube(query)
+            
+        elif "send message" in query or "send a message" in query or "call" in query or "video call" in query:
             print("Handling WhatsApp command")  # Debugging statement
             from assist.Engine.features import findContact, whatsApp
             flag = ""
@@ -67,16 +70,16 @@ def allCommands(message=1):
             print(f"Contact number: {contact_no}, Name: {name}")  # Debugging statement
 
             if contact_no != 0:
-                if "send message" in query:
+                if "send message" in query or "send a message" in query:
                     flag = 'message'
                     speak("What message to send?")
                     query = takecommand()
                     print(f"Message to send: {query}")  # Debugging statement
                     
-                elif "phone call" in query:
+                elif "phone call" in query or "make a call" in query:
                     flag = 'call'
                     
-                else:
+                elif "video call" in query:
                     flag = 'video call'
 
                 # Call whatsApp method and print status
