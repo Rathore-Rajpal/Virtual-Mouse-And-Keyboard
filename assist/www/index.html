@@ -26,7 +26,7 @@
 
 <body>
     <div class="container">
-        <section id="oval" class="md-4" >
+        <section id="oval" class="md-4">
             <div class="row">
                 <div class="col-md-1"></div>
                 <div class="col-md-10">
@@ -50,9 +50,9 @@
                             <div id="TextInput" class="d-flex">
                                 <input type="text" class="input-field" name="chatbox" id="chatbox"
                                     placeholder="Type here..">
-                                <button id = "SendBtn" class = "glow-on-hover" hidden><i class = "bi bi-send"></i></button>
+                                <button id="SendBtn" class="glow-on-hover" hidden><i class="bi bi-send"></i></button>
                                 <button id="MicBtn" class="glow-on-hover"><i class="bi bi-mic-fill"></i></button>
-                                <button id="ChatBtn" class="glow-on-hover"><i class="bi bi-chat-dots-fill"></i></button>
+                                <button id="ChatBtn" class="glow-on-hover" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><i class="bi bi-chat-dots"></i></button>
                                 <button id="SettingsBtn" class="glow-on-hover"><i class="bi bi-gear-fill"></i></button>
                             </div>
 
@@ -63,14 +63,14 @@
             </div>
 
         </section>
-        <section id="siriwave" class="md-4"  hidden>
+        <section id="siriwave" class="md-4" hidden>
 
             <div class="container">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="d-flex justify-content-center align-tems-center" style="height: 100vh;">
                             <div class="">
-                                <p class = "text-start text-light mb-4 siri-message">Hello i am Buddy</p>
+                                <p class="text-start text-light mb-4 siri-message">Hello i am Buddy</p>
                                 <div id="siri-container"></div>
                             </div>
 
@@ -81,6 +81,13 @@
 
         </section>
     </div>
+    <div class="offcanvas offcanvas-start chat-canvas" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
+    id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title text-white" id="offcanvasScrollingLabel">Chats</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div id="chat-canvas-body" class="offcanvas-body">
     <!--Jquery  -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
 
@@ -105,7 +112,7 @@
 
     <!-- Texllate -->
     <script src="http://jschr.github.io/textillate/jquery.textillate.js"></script>
-    
+
     <script src="main.js"></script>
     <script src="/eel.js"></script>
     <script type="text/javascript" src="/controller.js"></script>
