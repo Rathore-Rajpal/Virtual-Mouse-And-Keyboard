@@ -12,6 +12,7 @@ def speak(text):
     engine.setProperty('rate', 174) 
     eel.DisplayMessage(text)
     engine.say(text)
+    eel.receiverText(text)
     engine.runAndWait()
 
 def takecommand():
@@ -44,9 +45,11 @@ def allCommands(message=1):
     
     if message == 1:
         query = takecommand()
-        print(f"Query received: {query}") # Debugging statement
+        print(f"Query received: {query}")# Debugging statement
+        eel.senderText(query)
     else:
         query = message
+        eel.senderText(query)
         
     try:
         
