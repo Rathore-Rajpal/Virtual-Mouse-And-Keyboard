@@ -5,6 +5,7 @@ import struct
 import subprocess
 import time
 import webbrowser
+from hugchat import hugchat
 from playsound import playsound
 import eel
 import pyautogui
@@ -214,3 +215,14 @@ def whatsApp(mobile_no, message, flag, name):
     
     except Exception as e:
         print(f"Error in WhatsApp function: {e}")
+
+# chat bot 
+def chatBot(query):
+    user_input = query.lower()
+    chatbot = hugchat.ChatBot(cookie_path="assist\Engine\cookies.json")
+    id = chatbot.new_conversation()
+    chatbot.change_conversation(id)
+    response =  chatbot.chat(user_input)
+    print(response)
+    speak(response)
+    return response

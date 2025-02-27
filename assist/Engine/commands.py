@@ -92,7 +92,8 @@ def allCommands(message=1):
                 print("Contact not found!")  # Debugging statement
 
         else:
-            print("Command not recognized")  # Debugging statement
+            from assist.Engine.features import chatBot
+            chatBot(query)
 
     except Exception as e:
         print(f"Error in allCommands: {e}")  # Detailed error message for debugging
