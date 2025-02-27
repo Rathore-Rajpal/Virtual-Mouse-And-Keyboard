@@ -11,7 +11,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 50px; /* Adjust this value to move the circular design down */
+    margin-top: 50px;
+    /* Adjust this value to move the circular design down */
 }
 
 .square span:nth-child(1),
@@ -27,9 +28,10 @@ body {
     border-radius: 38% 62% 63% 37% / 41% 44%;
     transition: 0.5s;
 }
-h5{
+
+h5 {
     position: relative;
-    top : -50px;
+    top: -50px;
 }
 
 .square span:nth-child(1) {
@@ -49,6 +51,7 @@ h5{
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -58,6 +61,7 @@ h5{
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -67,6 +71,7 @@ h5{
     0% {
         transform: rotate(0deg);
     }
+
     100% {
         transform: rotate(360deg);
     }
@@ -151,42 +156,49 @@ h5{
     0% {
         background-position: 0 0;
     }
+
     50% {
         background-position: 400% 0;
     }
+
     100% {
         background-position: 0 0;
     }
 }
 
-p{
+p {
     position: relative;
     top: 200px;
     left: 220px;
 }
 
-.chat-canvas{
+/* Chat Box Start */
+
+.chat-canvas {
     background-color: #191919
-  }
-  
-  .receiver_message{
+}
+
+.receiver_message {
     padding: 8px;
     border: 2px solid cyan;
     border-radius: 0px 15px 15px 20px;
     width: auto;
     color: white;
     background-color: #0dcaf014;
-  }
-  
-  .sender_message{
+}
+
+.sender_message {
     padding: 8px;
     border: 1px solid #0045ff;
     border-radius: 15px 15px 0px 20px;
     width: auto;
     color: white;
     background-color: #0045ff;
-  }
-  .width-size{
+}
+
+.width-size {
     max-width: 80%;
     width: auto;
-  }
+}
+
+/* Chat Box Start End*/
