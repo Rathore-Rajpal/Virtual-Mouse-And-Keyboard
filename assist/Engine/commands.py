@@ -6,6 +6,7 @@ import os
 
 @eel.expose 
 def speak(text):
+    text = str(text)
     engine = pyttsx3.init()
     voices = engine.getProperty('voices')
     engine.setProperty('voice', voices[0].id)

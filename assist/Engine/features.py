@@ -17,6 +17,7 @@ from assist.Engine.helper import extract_yt_term, remove_words
 import pvporcupine
 import pyaudio
 
+stop_flag = False
 #playing assistant sound function.
 conn = sqlite3.connect("buddy.db")
 cursor = conn.cursor()
@@ -217,12 +218,34 @@ def whatsApp(mobile_no, message, flag, name):
         print(f"Error in WhatsApp function: {e}")
 
 # chat bot 
+@eel.expose
 def chatBot(query):
+    global stop_flag
+    stop_flag = False  # Reset the stop flag at the start of the process
+
     user_input = query.lower()
     chatbot = hugchat.ChatBot(cookie_path="assist\Engine\cookies.json")
     id = chatbot.new_conversation()
     chatbot.change_conversation(id)
-    response =  chatbot.chat(user_input)
-    print(response)
-    speak(response)
-    return response
+
+    # Check for stop flag before proceeding with the conversation
+    if stop_flag:
+        print("Process stopped.")
+        return "Process stopped."
+
+    response = chatbot.chat(user_input)
+
+    # Limit the response to 50 words
+    limited_response = ' '.join(response.split()[:50])
+    
+    print(limited_response)
+    speak(limited_response)
+    return limited_response
+
+@eel.expose
+def stopProcess():
+    global stop_flag
+    stop_flag = True  # Set the stop flag to True, which will stop the chatbot process
+    print("Stopping the assistant process...")
+
+    # Any additional logic to gracefully stop the conversation or clean up resources

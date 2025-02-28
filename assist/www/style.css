@@ -168,9 +168,16 @@ h5 {
 
 p {
     position: relative;
-    top: 200px;
-    left: 220px;
+    top: 10px;
+    left: 10px;
 }
+
+.siri-message {
+    word-wrap: break-word; /* Allows long messages to wrap */
+    max-width: 80%; /* Limit the width of the message */
+    margin: 0 auto; /* Center the message horizontally */
+}
+
 
 /* Chat Box Start */
 

@@ -102,6 +102,14 @@ $(document).ready(function () {
             PlayAssistant(message)
         }
     });
+
+    $("#GoBackBtn").click(function () {
+        eel.stopProcess();  // Replace with the actual function that stops the current assistant process
+
+        // Switch sections
+        $("#siriwave").attr("hidden", true);
+        $("#oval").attr("hidden", false);
+    });
     
 
 });

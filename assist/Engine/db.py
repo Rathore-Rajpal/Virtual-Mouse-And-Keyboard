@@ -75,30 +75,34 @@ cursor = conn.cursor()
 #cursor.execute(query)
 #conn.commit()
 
-query = "INSERT INTO contacts VALUES (null,'Shweta Verma','7020264223','')"
-cursor.execute(query)
-conn.commit()
+#query = "INSERT INTO contacts VALUES (null,'Shweta Verma','7020264223','')"
+#cursor.execute(query)
+#conn.commit()
 
-query = "INSERT INTO contacts VALUES (null,'raj','9175442260','')"
-cursor.execute(query)
-conn.commit()
+#query = "INSERT INTO contacts VALUES (null,'raj','9175442260','')"
+#cursor.execute(query)
+#conn.commit()
 
-query = "INSERT INTO contacts VALUES (null,'Arya Rai','8010645336','')"
-cursor.execute(query)
-conn.commit()
+#query = "INSERT INTO contacts VALUES (null,'Arya Rai','8010645336','')"
+#cursor.execute(query)
+#conn.commit()
 
-query = "INSERT INTO contacts VALUES (null,'Ritesh Sable','8530778124','')"
-cursor.execute(query)
-conn.commit()
+#query = "INSERT INTO contacts VALUES (null,'Ritesh Sable','8530778124','')"
+#cursor.execute(query)
+#conn.commit()
 
-query = "INSERT INTO contacts VALUES (null,'Yash Padwal','8731809331','')"
-cursor.execute(query)
-conn.commit()
+#query = "INSERT INTO contacts VALUES (null,'Yash Padwal','8731809331','')"
+#cursor.execute(query)
+#conn.commit()
 
-query = "INSERT INTO contacts VALUES (null,'Ayush','8943078101','')"
-cursor.execute(query)
-conn.commit
+#query = "INSERT INTO contacts VALUES (null,'Ayush','8943078101','')"
+#cursor.execute(query)
+#conn.commit
 
-query = "INSERT INTO contacts VALUES (null,'Sister','6377281524','')"
+#query = "INSERT INTO contacts VALUES (null,'Sister','6377281524','')"
+#cursor.execute(query)
+#conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'Mom','8829976187','')"
 cursor.execute(query)
 conn.commit()
