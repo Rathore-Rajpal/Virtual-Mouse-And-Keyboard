@@ -103,6 +103,10 @@ cursor = conn.cursor()
 #cursor.execute(query)
 #conn.commit()
 
-query = "INSERT INTO contacts VALUES (null,'Mom','8829976187','')"
+#query = "INSERT INTO contacts VALUES (null,'Mom','8829976187','')"
+#cursor.execute(query)
+#conn.commit()
+
+query = "INSERT INTO contacts VALUES (null,'Mum','8829976187','')"
 cursor.execute(query)
 conn.commit()
