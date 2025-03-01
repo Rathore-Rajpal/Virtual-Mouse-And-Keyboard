@@ -17,7 +17,7 @@ from assist.Engine.helper import extract_yt_term, remove_words
 import pvporcupine
 import pyaudio
 
-stop_flag = False
+stop_flag = False 
 #playing assistant sound function.
 conn = sqlite3.connect("buddy.db")
 cursor = conn.cursor()
@@ -217,13 +217,28 @@ def whatsApp(mobile_no, message, flag, name):
     except Exception as e:
         print(f"Error in WhatsApp function: {e}")
 
-# chat bot 
+
+@eel.expose
+def stopChatBot():
+    global stop_flag
+    stop_flag = True  # Set the flag to True to stop the conversation
+    print("Chatbot conversation stopped.")
+    print("Method called")
+
 def chatBot(query):
+    global stop_flag
     user_input = query.lower()
+    
+    if stop_flag:
+        print("Process stopped. No response will be generated.")
+        return
+    
     chatbot = hugchat.ChatBot(cookie_path="assist\Engine\cookies.json")
     id = chatbot.new_conversation()
     chatbot.change_conversation(id)
-    response =  chatbot.chat(user_input)
+    
+    response = chatbot.chat(user_input)
     print(response)
     speak(response)
+    
     return response

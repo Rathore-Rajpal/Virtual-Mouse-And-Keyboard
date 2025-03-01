@@ -15,7 +15,6 @@ $(document).ready(function () {
     function ShowHood() {
         $("#oval").attr("hidden", false);
         $("#siriwave").attr("hidden", true);
-        console.log("show hood called")
     }
 
     eel.expose(senderText)
