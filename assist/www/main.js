@@ -108,6 +108,10 @@ $(document).ready(function () {
         $("#oval").attr("hidden", false);
         eel.stopChatBot();
     });
+
+    $("#ChatBtn").click(function () {
+        eel.playChatSound()
+    });
     
 
 });

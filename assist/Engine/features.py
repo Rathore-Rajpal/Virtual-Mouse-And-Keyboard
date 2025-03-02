@@ -31,6 +31,11 @@ def playAssistantSound():
 def playMicSound():
     mis_dir = "C:\\VirtualMouseProject\\assist\\www\\assets\\audio\\mic_sound.wav"
     playsound(mis_dir)
+    
+@eel.expose
+def playChatSound():
+    mis_dir = "C:\\VirtualMouseProject\\assist\\www\\assets\\audio\\chat_sound.wav"
+    playsound(mis_dir)
 
 def openCommand(query):
     query = query.replace(ASSISTANT_NAME, "")
@@ -202,22 +207,11 @@ def whatsApp(mobile_no, message, flag, name):
         print(f"Error in WhatsApp function: {e}")
 
 
-@eel.expose
-def stopChatBot():
-    global stop_flag
-    stop_flag = True  # Set the flag to True to stop the conversation
-    print("Chatbot conversation stopped.")
-    print("Method called")
-
 def chatBot(query):
     global stop_flag
     user_input = query.lower()
     
-    if stop_flag:
-        print("Process stopped. No response will be generated.")
-        return
-    
-    chatbot = hugchat.ChatBot(cookie_path="assist\Engine\cookies.json")
+    chatbot = hugchat.ChatBot(cookie_path="assist\\Engine\\cookies.json")
     id = chatbot.new_conversation()
     chatbot.change_conversation(id)
     
