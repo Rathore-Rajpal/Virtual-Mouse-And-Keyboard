@@ -27,7 +27,6 @@ if __name__ == '__main__':
     
     # Start both processes
     p1.start()
-    #subprocess.call([r'device.bat'])
     p2.start()
     
     p1.join()

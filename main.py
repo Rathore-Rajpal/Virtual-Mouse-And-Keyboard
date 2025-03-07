@@ -3,12 +3,29 @@ import eel
 import time
 from assist.Engine.features import *
 from assist.Engine.commands import *
+from assist.Engine.auth import recoganize
 
 def start():
     # Initialize eel with the correct path to the 'www' folder
     eel.init("assist/www")
-
     playAssistantSound()
+    @eel.expose
+    def init():
+         #subprocess.call([r'device.bat'])
+         eel.hideLoader()
+         speak("Ready for face Authentication")
+         flag = recoganize.AuthenticateFace()
+         if(flag == 1):
+             eel.hideFaceAuth()
+             speak("Face autentication sucessfull")
+             eel.hideFaceAuthSuccess()
+             speak("welcome to AI Assistant. I am your buddy..ready to help")
+             eel.hideStart()
+             playAssistantSound()
+         else:
+             speak("Face autentication Failed")
+        
+   
 
     # Launch Microsoft Edge in app mode
     os.system('start msedge.exe --app="http://localhost:8000/index.html"')
