@@ -10,8 +10,8 @@ def AuthenticateFace():
     # Local Binary Patterns Histograms
     recognizer = cv2.face.LBPHFaceRecognizer_create()
 
-    recognizer.read('engine\\auth\\trainer\\trainer.yml')  # load trained model
-    cascadePath = "engine\\auth\\haarcascade_frontalface_default.xml"
+    recognizer.read('assist\\Engine\\auth\\trainer\\trainer.yml')  # load trained model
+    cascadePath = "assist\\Engine\\auth\\haarcascade_frontalface_default.xml"
     # initializing haar cascade for object detection approach
     faceCascade = cv2.CascadeClassifier(cascadePath)
 
@@ -21,7 +21,7 @@ def AuthenticateFace():
     id = 2  # number of persons you want to Recognize
 
 
-    names = ['', 'Digambar']  # names, leave first empty bcz counter starts from 0
+    names = ['', 'Raj']  # names, leave first empty bcz counter starts from 0
 
 
     cam = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # cv2.CAP_DSHOW to remove warning
