@@ -1,53 +1,48 @@
-import struct
-import time
-import pvporcupine
-import pyaudio
-import pyautogui as autogui
 
-def hotword():
-    porcupine = None
-    pa = None
-    audio_stream = None
+import eel
+import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+from Engine.commands import speak
 
+
+
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
+    client_id="6d14481136d1487ba4145dd6b2287906",  # Replace with your Spotify Client ID
+    client_secret="dbbf5b322810410a9c53d411f29bd095",  # Replace with your Spotify Client Secret
+    redirect_uri="http://localhost:8888/callback",  # Replace with your redirect URI
+    scope="user-read-playback-state,user-modify-playback-state,user-read-currently-playing"
+))
+
+@eel.expose
+def playSpotifyMusic(query):
     try:
-        access_key = "nm2uZzRWhxQ1MxyzsIGhOOkROeGh2WTdGQmdkOBtlaq4b9trt0YENQ=="
-        keyword_path = "C:\\VirtualMouseProject\\hey-buddy_en_windows_v3_0_0\\hey-buddy_en_windows_v3_0_0.ppn"
+        # Extract the song name from the query
+        song_name = query.replace("play", "").strip()
+        
+        # Search for the track on Spotify
+        results = sp.search(q=song_name, type='track', limit=1)
+        track_uri = results['tracks']['items'][0]['uri']  # Get the URI of the first track
 
-        porcupine = pvporcupine.create(
-            access_key=access_key,
-            keyword_paths=[keyword_path],
-            sensitivities=[0.5]
-        )
+        # Get the user's devices (where the music can be played)
+        devices = sp.devices()
+        if devices['devices']:
+            device_id = devices['devices'][0]['id']  # Use the first available device
 
-        pa = pyaudio.PyAudio()
-        audio_stream = pa.open(
-            rate=porcupine.sample_rate,
-            channels=1,
-            format=pyaudio.paInt16,
-            input=True,
-            frames_per_buffer=porcupine.frame_length
-        )
+            # Start playback on the device
+            sp.start_playback(device_id=device_id, uris=[track_uri])
 
-        print("Listening for 'buddy'...")
-
-        while True:
-            pcm = audio_stream.read(porcupine.frame_length, exception_on_overflow=False)
-            pcm = struct.unpack_from("h" * porcupine.frame_length, pcm)
-            result = porcupine.process(pcm)
-            
-            if result >= 0:
-                print("Hotword detected!")
-                autogui.hotkey('alt', 'j')  # Simplified key combination
-                time.sleep(1)
-
+            # Announce the song being played
+            song_name = results['tracks']['items'][0]['name']
+            artist_name = results['tracks']['items'][0]['artists'][0]['name']
+            print(f"Playing {song_name} by {artist_name} on Spotify")
+        else:
+            print("No active devices found on Spotify")
+    
     except Exception as e:
-        print("Error:", e)
-    finally:
-        if porcupine:
-            porcupine.delete()
-        if audio_stream:
-            audio_stream.close()
-        if pa:
-            pa.terminate()
+        print(f"Error in playSpotifyMusic: {e}")
+        #speak("Sorry, I couldn't play the song on Spotify.")
+        
 
-hotword()
+playSpotifyMusic("play prove them wrong")
+
+
