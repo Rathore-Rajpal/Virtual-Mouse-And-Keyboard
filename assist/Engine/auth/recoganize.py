@@ -21,7 +21,7 @@ def AuthenticateFace():
     id = 2  # number of persons you want to Recognize
 
 
-    names = ['', 'Raj']  # names, leave first empty bcz counter starts from 0
+    names = ['', 'Raj','shweta','yash']  # names, leave first empty bcz counter starts from 0
 
 
     cam = cv2.VideoCapture(0, cv2.CAP_DSHOW)  # cv2.CAP_DSHOW to remove warning
@@ -75,8 +75,8 @@ def AuthenticateFace():
         k = cv2.waitKey(10) & 0xff  # Press 'ESC' for exiting video
         if k == 27:
             break
-        if flag == 1:
-            break
+        #if flag == 1:
+           # break
             
 
     # Do a bit of cleanup
@@ -84,3 +84,5 @@ def AuthenticateFace():
     cam.release()
     cv2.destroyAllWindows()
     return flag
+
+AuthenticateFace()
