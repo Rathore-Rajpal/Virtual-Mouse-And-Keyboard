@@ -259,4 +259,10 @@ def playSpotifyMusic(query):
     except Exception as e:
         print(f"Error in playSpotifyMusic: {e}")
         speak("Sorry, I couldn't play the song on Spotify.")
+        
+def google_search(query):
+     search_term = query.replace("search", "").replace("on google", "").replace("on internet", "").strip()
+     speak(f"Searching for {search_term} on Google")
+     search_url = f"https://www.google.com/search?q={search_term}"
+     webbrowser.open(search_url)
 
