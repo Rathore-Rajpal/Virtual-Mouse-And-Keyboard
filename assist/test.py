@@ -3,12 +3,19 @@ import eel
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 from Engine.commands import speak
+from dotenv import load_dotenv 
+import os
+
+load_dotenv()
+
+client_ide = os.getenv("CLIENT_ID")
+client_sec = os.getenv("CLIENT_SECRET")
 
 
 
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
-    client_id="6d14481136d1487ba4145dd6b2287906",  # Replace with your Spotify Client ID
-    client_secret="dbbf5b322810410a9c53d411f29bd095",  # Replace with your Spotify Client Secret
+    client_id = client_ide,  # Replace with your Spotify Client ID
+    client_secret=client_sec,  # Replace with your Spotify Client Secret
     redirect_uri="http://localhost:8888/callback",  # Replace with your redirect URI
     scope="user-read-playback-state,user-modify-playback-state,user-read-currently-playing"
 ))
@@ -43,6 +50,6 @@ def playSpotifyMusic(query):
         #speak("Sorry, I couldn't play the song on Spotify.")
         
 
-playSpotifyMusic("play prove them wrong")
+playSpotifyMusic("not like us")
 
 

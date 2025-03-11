@@ -4,6 +4,7 @@ import os
 import base64
 from requests import post, get
 import webbrowser
+import assist.Engine.commands as cm
 
 # Load environment variables from .env file
 load_dotenv()
@@ -39,18 +40,27 @@ def get_token():
 def get_auth_header(token):
     return {"Authorization" : "Bearer " + token}
 
-def search_for_song(token, song_name, artist_name):
+def search_for_song(token, song_name, artist_name=None):
     url = "https://api.spotify.com/v1/search"
     headers = get_auth_header(token)
-    # Search for both song name and artist name
-    query = f"?q=track:{song_name} artist:{artist_name}&type=track&limit=1"
+    
+    # If artist_name is provided, search with both song name and artist name; otherwise, just the song name
+    if artist_name:
+        query = f"?q=track:{song_name} artist:{artist_name}&type=track&limit=1"
+    else:
+        query = f"?q=track:{song_name}&type=track&limit=1"
     
     query_url = url + query
     result = get(query_url, headers=headers)
+    
+    if result.status_code != 200:
+        print(f"Error fetching the song: {result.status_code}")
+        return None
+    
     json_result = json.loads(result.content)["tracks"]["items"]
     
     if len(json_result) == 0:
-        print(f"No track with the name '{song_name}' by '{artist_name}' found.")
+        print(f"No track with the name '{song_name}'" + (f" by '{artist_name}'" if artist_name else "") + " found.")
         return None
     
     # Return the first track from the search results
@@ -59,30 +69,35 @@ def search_for_song(token, song_name, artist_name):
 def play_song_on_spotify(song):
     # Open the song URL in the default web browser
     webbrowser.open(song['external_urls']['spotify'])
+    cm.speak(f"Playing '{song['name']}' by {song['artists'][0]['name']} on Spotify.")
     print(f"Playing '{song['name']}' by {song['artists'][0]['name']} on Spotify.")
 
 def handle_query(token, query):
     # Extract song name and artist name from the query
     if "play" in query.lower():
-        # Assuming the query format is "play {song_name} by {artist_name} on spotify"
+        # Assuming the query format is either "play {song_name} by {artist_name} on spotify"
+        # or "play {song_name} on spotify"
         query = query.lower().replace("play", "").replace("on spotify", "").strip()
+        
+        # Check if the artist name is provided using "by"
         if "by" in query:
             song_name, artist_name = map(str.strip, query.split("by"))
-            
-            # Search for the song on Spotify
-            song = search_for_song(token, song_name, artist_name)
-            
-            # If song found, play it on Spotify
-            if song:
-                play_song_on_spotify(song)
-            else:
-                print("Song not found.")
         else:
-            print("Invalid query format. Use: 'play {song_name} by {artist_name} on spotify'")
+            song_name = query
+            artist_name = None  # No artist name provided
+        
+        # Search for the song on Spotify
+        song = search_for_song(token, song_name, artist_name)
+        
+        # If song found, play it on Spotify
+        if song:
+            play_song_on_spotify(song)
+        else:
+            cm.speak("Song not found")
+            print("Song not found.")
+    else:
+        cm.speak("Invalid query format. Use: 'play {song_name} by {artist_name} on spotify' or 'play {song_name} on spotify'")
+        print("Invalid query format. Use: 'play {song_name} by {artist_name} on spotify' or 'play {song_name} on spotify'")
 
 # Call the get_token function
 token = get_token()
-
-# Handle the query with both song and artist name
-q = "play prove them wrong by Bella on spotify"
-handle_query(token, q)

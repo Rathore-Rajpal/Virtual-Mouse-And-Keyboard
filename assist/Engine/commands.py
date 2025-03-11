@@ -3,6 +3,7 @@ import pyttsx3
 import speech_recognition as sr
 import eel
 import os
+import assist.Engine.spotify as sp
 
 @eel.expose 
 def speak(text):
@@ -91,6 +92,11 @@ def allCommands(message=1):
                 whatsApp(contact_no, query, flag, name)
             else:
                 print("Contact not found!")  # Debugging statement
+        
+        elif "on spotify" in query or "play " in query:
+            token = sp.get_token()
+            sp.handle_query(token, query)
+            
 
         else:
             from assist.Engine.features import chatBot
