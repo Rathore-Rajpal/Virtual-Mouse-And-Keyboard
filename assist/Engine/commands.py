@@ -100,8 +100,7 @@ def allCommands(message=1):
         elif "search" in query and ("on google" in query or "on internet" in query):
             print("Handling 'search on Google' command")  # Debugging statement
             from assist.Engine.features import google_search
-            google_search(query)
-            
+            google_search(query) 
 
         else:
             from assist.Engine.features import chatBot

@@ -1,55 +1,40 @@
-
-import eel
-import spotipy
-from spotipy.oauth2 import SpotifyOAuth
-from Engine.commands import speak
-from dotenv import load_dotenv 
-import os
-
-load_dotenv()
-
-client_ide = os.getenv("CLIENT_ID")
-client_sec = os.getenv("CLIENT_SECRET")
+import time
+import psutil
+import pyautogui
 
 
-
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(
-    client_id = client_ide,  # Replace with your Spotify Client ID
-    client_secret=client_sec,  # Replace with your Spotify Client Secret
-    redirect_uri="http://localhost:8888/callback",  # Replace with your redirect URI
-    scope="user-read-playback-state,user-modify-playback-state,user-read-currently-playing"
-))
-
-@eel.expose
-def playSpotifyMusic(query):
-    try:
-        # Extract the song name from the query
-        song_name = query.replace("play", "").strip()
-        
-        # Search for the track on Spotify
-        results = sp.search(q=song_name, type='track', limit=1)
-        track_uri = results['tracks']['items'][0]['uri']  # Get the URI of the first track
-
-        # Get the user's devices (where the music can be played)
-        devices = sp.devices()
-        if devices['devices']:
-            device_id = devices['devices'][0]['id']  # Use the first available device
-
-            # Start playback on the device
-            sp.start_playback(device_id=device_id, uris=[track_uri])
-
-            # Announce the song being played
-            song_name = results['tracks']['items'][0]['name']
-            artist_name = results['tracks']['items'][0]['artists'][0]['name']
-            print(f"Playing {song_name} by {artist_name} on Spotify")
-        else:
-            print("No active devices found on Spotify")
+def play_pause():
+    pyautogui.press('win')
+    time.sleep(1)
+    pyautogui.write('spotify')
+    time.sleep(1)
+    pyautogui.press('enter')
     
-    except Exception as e:
-        print(f"Error in playSpotifyMusic: {e}")
-        #speak("Sorry, I couldn't play the song on Spotify.")
-        
-
-playSpotifyMusic("not like us")
-
-
+    program_name = "Spotify.exe"
+    
+    timeout = time.time() + 120 #120s = 2 mins
+    while True:
+        for process in psutil.process_iter():
+            try:
+                if process.name() == program_name:
+                    print("spotify is open")
+                    break
+               
+            except(psutil.NoSuchProcess,psutil.AccessDenied):
+                pass
+        else:
+            #if the program is not open, check if we have a timeoout
+            if time.time() > timeout:
+                print("timed out")
+                break
+            else:
+                #wait for a short amout of time, before checking again
+                time.sleep(1)
+                continue
+        #if we reach at this point, the program is open so break out of loop
+        break
+                
+    time.sleep(7)
+    pyautogui.press('space') #play music
+    
+play_pause()

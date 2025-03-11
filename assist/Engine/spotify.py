@@ -5,6 +5,9 @@ import base64
 from requests import post, get
 import webbrowser
 import assist.Engine.commands as cm
+import pyautogui
+import time
+import psutil
 
 # Load environment variables from .env file
 load_dotenv()
@@ -98,6 +101,41 @@ def handle_query(token, query):
     else:
         cm.speak("Invalid query format. Use: 'play {song_name} by {artist_name} on spotify' or 'play {song_name} on spotify'")
         print("Invalid query format. Use: 'play {song_name} by {artist_name} on spotify' or 'play {song_name} on spotify'")
+        
+def play_pause():
+    pyautogui.press('win')
+    time.sleep(1)
+    pyautogui.write('spotify')
+    time.sleep(1)
+    pyautogui.press('enter')
+    
+    program_name = "Spotify.exe"
+    
+    timeout = time.time() + 120 #120s = 2 mins
+    while True:
+        for process in psutil.process_iter():
+            try:
+                if process.name() == program_name:
+                    print("spotify is open")
+                    break
+               
+            except(psutil.NoSuchProcess,psutil.AccessDenied):
+                pass
+        else:
+            #if the program is not open, check if we have a timeoout
+            if time.time() > timeout:
+                print("timed out")
+                break
+            else:
+                #wait for a short amout of time, before checking again
+                time.sleep(1)
+                continue
+        #if we reach at this point, the program is open so break out of loop
+        break
+                
+    time.sleep(7)
+    pyautogui.press('space') #play music
 
 # Call the get_token function
 token = get_token()
+
