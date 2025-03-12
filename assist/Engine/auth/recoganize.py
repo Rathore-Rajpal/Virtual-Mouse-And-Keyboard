@@ -75,5 +75,3 @@ def AuthenticateFace():
     cv2.destroyAllWindows()
 
     return flag
-
-

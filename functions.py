@@ -41,10 +41,10 @@ def is_scroll_down(landmarks_list):
     return False
 
 def is_close_window_gesture(landmarks_list):
-    # Gesture: Thumb tip (landmarks_list[4]) touching Ring finger tip (landmarks_list[16])
-    return util.get_distance([landmarks_list[4], landmarks_list[16]]) < 30  # Adjust the threshold as needed
+    # Increase the threshold slightly for closing gesture
+    return util.get_distance([landmarks_list[4], landmarks_list[16]]) < 25  # Adjust the threshold to a smaller value
 
 def is_minimize_window_gesture(landmarks_list):
-    # Gesture: Thumb tip (landmarks_list[4]) touching Middle finger tip (landmarks_list[12])
-    return util.get_distance([landmarks_list[4], landmarks_list[12]]) < 30  # Adjust the threshold as needed
+    # Decrease the threshold slightly for minimizing gesture
+    return util.get_distance([landmarks_list[4], landmarks_list[12]]) < 35  # Adjust the threshold to a larger value
 

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Virtual Mouse</title>
+    <link rel="shortcut icon" href="assets/img/favicon-32x32.png" type="image/x-icon">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+
+        <!-- Section for the Canvas and Visual Effects -->
+        <section id="oval" class="md-4">
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-10">
+                    <div class="d-flex justify-content-center align-items-center" style="height:80vh; position: relative;">
+                        <canvas id="canvasOne" height="700" width="700" style="position: absolute;"></canvas>
+                        <div id="jarvisHood">
+                            <div class="square" id="animatedSquare">
+
+                                <span class="circle"></span>
+                                <span class="circle"></span>
+                                <span class="circle"></span>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-1"></div>
+            </div>
+        </section>
+
+        <!-- Buttons Section -->
+        <section class="buttons-section text-center my-5">
+            <button id="launchMouse" class="btn btn-launch animated-button">
+                <i class="bi bi-play-circle-fill"></i> Launch Virtual Mouse
+            </button>
+            <button id="stopMouse" class="btn btn-stop animated-button">
+                <i class="bi bi-stop-circle-fill"></i> Stop Virtual Mouse
+            </button>
+        </section>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <script src="script.js"></script>
+
+    <script>
+        // Get the animated container
+        const animatedSquare = document.getElementById('animatedSquare');
+        const ovalContainer = document.getElementById('oval');
+
+        // Add mouse move event to the container
+        ovalContainer.addEventListener('mousemove', (event) => {
+            const containerRect = ovalContainer.getBoundingClientRect();
+            const mouseX = event.clientX - containerRect.left; // Get mouse X relative to the container
+            const mouseY = event.clientY - containerRect.top;  // Get mouse Y relative to the container
+
+            const offsetX = (mouseX / containerRect.width) * 100 - 50; // Map X position to percentage
+            const offsetY = (mouseY / containerRect.height) * 100 - 50; // Map Y position to percentage
+
+            // Apply transform to move the animated square with the mouse
+            animatedSquare.style.transform = `translate(${offsetX}px, ${offsetY}px)`;
+        });
+
+        // Launch Virtual Mouse function
+        $("#launchMouse").click(function () {
+            console.log("Launching Virtual Mouse...");
+            // Add your launch mouse logic here
+        });
+
+        // Stop Virtual Mouse function
+        $("#stopMouse").click(function () {
+            console.log("Stopping Virtual Mouse...");
+            // Add your stop mouse logic here
+        });
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: white;
+        }
+
+        #jarvisHood .square {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: transform 0.1s ease-out; /* Smooth movement with slight delay */
+        }
+
+        #jarvisHood .circle {
+            width: 100px;
+            height: 100px;
+            background-color: rgba(0, 150, 136, 0.7);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+            margin: 20px;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        /* Animated and Interactive Buttons */
+        .animated-button {
+            font-size: 20px;
+            padding: 15px 30px;
+            border-radius: 50px;
+            transition: all 0.4s ease-in-out;
+            background-color: #009688;
+            color: white;
+            border: none;
+            margin: 10px;
+            box-shadow: 0 8px 15px rgba(0, 150, 136, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .animated-button i {
+            margin-right: 10px;
+        }
+
+        .animated-button:before {
+            content: "";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 300%;
+            height: 300%;
+            background-color: rgba(255, 255, 255, 0.3);
+            transform: translate(-50%, -50%) rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+            z-index: -1;
+        }
+
+        .animated-button:hover {
+            background-color: #00796B;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .animated-button:hover:before {
+            opacity: 1;
+            width: 100%;
+            height: 100%;
+        }
+
+        .btn-launch {
+            background-color: #009688;
+        }
+
+        .btn-stop {
+            background-color: #D32F2F;
+        }
+
+        .btn-stop:hover {
+            background-color: #B71C1C;
+        }
+
+        .buttons-section {
+            margin-top: 50px;
+        }
+    </style>
+
+</body>
+
+</html>

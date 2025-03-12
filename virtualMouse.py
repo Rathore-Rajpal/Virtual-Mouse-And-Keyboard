@@ -6,11 +6,15 @@ from pynput.mouse import Button, Controller
 import random
 import functions
 from pyautogui import FailSafeException
+import time
+
 
 mouse = Controller()
 drawing_mode = False  # To toggle drawing mode
 screen_width, screen_height = pyautogui.size()
 SMOOTHING_FACTOR = 0.4
+
+gesture_start_time = None
 
 # Scaling factor to make reaching corners easier (increase this to make navigation easier)
 SCALING_FACTOR_X = 1.7  # Scale movement in the x direction
@@ -92,33 +96,46 @@ def move_mouse(index_finger_tip):
 
 
 def detect_gestures(frame, landmarks_list, processed):
-    global drawing_mode
+    """
+    Detects hand gestures based on landmarks.
+    Uses finger landmarks to control various actions like closing/minimizing windows, mouse clicks, etc.
+    """
+    global drawing_mode, gesture_start_time
+    current_time = time.time()
+
+    # Ensure landmarks list has enough points (at least 21 for full hand detection)
     if len(landmarks_list) >= 21:
+        # Get the index finger tip position
         index_finger_tip = find_finger_tip(processed)
         thumb_index_dist = util.get_distance([landmarks_list[4], landmarks_list[5]])
 
-        # Check if the thumb and pinky finger tips are in contact for drawing mode
+        # Check if thumb and pinky are touching for drawing mode
         if functions.is_thumb_pinky_touch(landmarks_list):
             drawing_mode = True
             cv2.putText(frame, "Drawing Mode On", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
         else:
             drawing_mode = False
-            #cv2.putText(frame, "Drawing Mode Off", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
 
-        # Close window gesture: thumb and ring finger tips touching
-        if functions.is_close_window_gesture(landmarks_list):
-            pyautogui.hotkey('alt', 'f4')  # Close the current window (use 'command', 'w' for macOS)
+        # Initialize gesture timer if it's not already set
+        if gesture_start_time is None:
+            gesture_start_time = current_time
+
+        # Close window gesture: thumb and ring finger stay together for 1 second
+        if functions.is_close_window_gesture(landmarks_list) and current_time - gesture_start_time > 1:
+            pyautogui.hotkey('alt', 'f4')  # Closes the current window (use 'command', 'w' for macOS)
             cv2.putText(frame, "Window Closed", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+            cv2.putText(frame, "Close Window", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
+            gesture_start_time = None  # Reset gesture start time
 
-        # Minimize window gesture: thumb and middle finger tips touching
-        if functions.is_minimize_window_gesture(landmarks_list):
-           pyautogui.hotkey('win', 'm')  # Directly minimize the current window (Windows)
-           cv2.putText(frame, "Window Minimized", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+        # Minimize window gesture: thumb and middle finger stay together for 1 second
+        elif functions.is_minimize_window_gesture(landmarks_list) and current_time - gesture_start_time > 1:
+            pyautogui.hotkey('win', 'm')  # Minimize the current window
+            cv2.putText(frame, "Window Minimized", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+            gesture_start_time = None  # Reset gesture start time
 
-
-        # Ensure that thumb and index fingers are NOT touching before performing other actions
+        # Ensure thumb and index fingers are NOT touching before performing mouse actions
         if not functions.is_thumb_index_touch(landmarks_list):
-            # Perform regular mouse movement when thumb and index are NOT touching
+            # Perform mouse movement when thumb and index are NOT touching
             if thumb_index_dist < 50 and util.get_angle(landmarks_list[5], landmarks_list[6], landmarks_list[8]) > 90:
                 move_mouse(index_finger_tip)
 
@@ -146,15 +163,15 @@ def detect_gestures(frame, landmarks_list, processed):
                 im1.save(f'my_screenshot_{label}.png')
                 cv2.putText(frame, "Screenshot Taken", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
 
-        # Scroll only if thumb and index are touching
+        # Scroll if thumb and index fingers are touching
         elif functions.is_scroll_up(landmarks_list):
             pyautogui.scroll(300)  # Adjust scroll speed as needed
             cv2.putText(frame, "Scroll Up", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
 
-        # Scroll Down
         elif functions.is_scroll_down(landmarks_list):
             pyautogui.scroll(-300)  # Adjust scroll speed as needed
             cv2.putText(frame, "Scroll Down", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
+
 
 
 
@@ -184,7 +201,7 @@ def main():
             detect_gestures(frame, landmarks_list, processed)
 
             cv2.imshow('Frame', frame)
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            if cv2.waitKey(1) == 27:  # 27 is the ASCII code for the Esc key
                 break
 
     finally:
