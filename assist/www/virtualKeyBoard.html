@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Virtual Mouse</title>
+    <title>Virtual Keyboard</title>
     <link rel="shortcut icon" href="assets/img/favicon-32x32.png" type="image/x-icon">
 
     <!-- Bootstrap CSS -->
@@ -28,18 +28,16 @@
             <div id="mouse">
                 <script src="https://unpkg.com/@dotlottie/player-component@2.7.12/dist/dotlottie-player.mjs"
                     type="module"></script>
-                <dotlottie-player src="https://lottie.host/938263d1-3dd9-45c2-86d4-248cc7cd2026/B52LU1ABPM.lottie"
+                <dotlottie-player src="https://lottie.host/a134f707-babc-420c-a629-c463922f661e/Lh8AJJzYXh.lottie"
                     background="transparent" speed="1" style="width: 300px; height: 300px" loop
                     autoplay></dotlottie-player>
-
-            </div>
 
         </section>
 
         <!-- Buttons Section -->
         <section class="buttons-section text-center my-5">
             <button id="launchMouse" class="btn btn-launch animated-button">
-                <i class="bi bi-play-circle-fill"></i> Launch Virtual Mouse
+                <i class="bi bi-play-circle-fill"></i> Launch Virtual keyboard
             </button>
 
 
@@ -61,7 +59,7 @@
 
                     // Send a request to the Flask server to launch the Python file
                     $.ajax({
-                        url: 'http://127.0.0.1:5000/launch-mouse',
+                        url: 'http://127.0.0.1:5000/launch-keyboard',
                         method: 'POST',
                         success: function (response) {
                             console.log(response.message);
@@ -178,8 +176,8 @@
 
                 #mouse {
                     position: absolute;
-                    top: 200px;
-                    left: 560px;
+                    top: 170px;
+                    left: 580px;
                 }
             </style>
 

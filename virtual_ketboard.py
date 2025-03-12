@@ -129,7 +129,7 @@ while True:
     cv2.imshow("Virtual Keyboard", img)
 
     # Break the loop if 'q' is pressed
-    if cv2.waitKey(1) & 0xFF == ord('q'):
+    if cv2.waitKey(1) == 27: 
         break
 
 # Release the camera and close all windows

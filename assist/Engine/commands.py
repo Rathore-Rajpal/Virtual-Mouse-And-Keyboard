@@ -59,7 +59,7 @@ def allCommands(message=1):
             from assist.Engine.features import PlayYoutube
             PlayYoutube(query)
         
-        elif any(kw in query for kw in ["send message", "call", "video call"]):
+        elif any(kw in query for kw in ["send message", "call", "video call","send a message"]):
             print("Handling WhatsApp command")
             from assist.Engine.features import findContact, whatsApp
             flag = ""
@@ -67,7 +67,7 @@ def allCommands(message=1):
             print(f"Contact number: {contact_no}, Name: {name}")
             
             if contact_no != 0:
-                if "send message" in query:
+                if "send message" in query or "send a message" in query:
                     flag = 'message'
                     speak("What message to send?")
                     query = takecommand()

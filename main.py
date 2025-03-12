@@ -12,12 +12,13 @@ def start():
     @eel.expose
     def init():
          #subprocess.call([r'device.bat'])
-         eel.hideLoader()
-         speak("Ready for face Authentication")
-         flag = recoganize.AuthenticateFace()
+         #eel.hideLoader()
+         #speak("Ready for face Authentication")
+         #flag = recoganize.AuthenticateFace()
+         flag=1
          if(flag == 1):
              eel.hideFaceAuth()
-             speak("Face autentication sucessfull")
+             #speak("Face autentication sucessfull")
              eel.hideFaceAuthSuccess()
              speak("welcome to AI Assistant. I am your buddy..ready to help")
              eel.hideStart()

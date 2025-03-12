@@ -107,6 +107,10 @@ cursor = conn.cursor()
 #cursor.execute(query)
 #conn.commit()
 
-query = "INSERT INTO contacts VALUES (null,'Mum','8829976187','')"
+#query = "INSERT INTO contacts VALUES (null,'Mum','8829976187','')"
+#cursor.execute(query)
+#conn.commit()
+
+query = "INSERT INTO sys_command VALUES (null,'virtual keyboard','C:\\VirtualMouseProject\\assist\\www\\virtual_ketboard.html')"
 cursor.execute(query)
 conn.commit()
