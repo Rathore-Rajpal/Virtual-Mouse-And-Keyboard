@@ -111,6 +111,7 @@ cursor = conn.cursor()
 #cursor.execute(query)
 #conn.commit()
 
-query = "INSERT INTO sys_command VALUES (null,'virtual keyboard','C:\\VirtualMouseProject\\assist\\www\\virtual_ketboard.html')"
+query = "INSERT INTO sys_command VALUES (null,'virtual keyboard','C:\\VirtualMouseProject\\assist\\www\\virtualKeyBoard.html')"
 cursor.execute(query)
 conn.commit()
+
