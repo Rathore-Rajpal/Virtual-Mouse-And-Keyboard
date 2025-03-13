@@ -50,8 +50,15 @@ def allCommands(message=1):
         eel.senderText(query)
         
     try:
-        if "open" in query:
-            print("Handling 'open' command")
+        # Handle Spotify command first if it matches the format "open {artist_name} on Spotify"
+        if "open" in query and "on spotify" in query:
+            print("Handling 'open artist on Spotify' command")
+            token = sp.get_token()
+            sp.handle_query(token, query)
+        
+        # General "open" command
+        elif "open" in query:
+            print("Handling general 'open' command")
             from assist.Engine.features import openCommand
             openCommand(query)
         
@@ -59,7 +66,7 @@ def allCommands(message=1):
             from assist.Engine.features import PlayYoutube
             PlayYoutube(query)
         
-        elif any(kw in query for kw in ["send message", "call", "video call","send a message"]):
+        elif any(kw in query for kw in ["send message", "call", "video call", "send a message"]):
             print("Handling WhatsApp command")
             from assist.Engine.features import findContact, whatsApp
             flag = ""
@@ -73,7 +80,7 @@ def allCommands(message=1):
                     query = takecommand()
                     print(f"Message to send: {query}")
                 
-                elif "phone call" in query:
+                elif "phone call" in query or "call" in query:
                     flag = 'call'
                 
                 elif "video call" in query:
@@ -117,8 +124,15 @@ def allCommands(message=1):
                 speak("I couldn't hear the note properly. Please try again.")
         
         elif "some music" in query or "play music" in query:
+            speak("Playing some music for you")
             print("Handling 'music play' command")
             sp.play_pause()
+        
+        elif "screenshot" in query.lower():
+            from assist.Engine.features import caputure_screenshot
+            caputure_screenshot()
+            speak("Screenshot captured sucessfully")
+            
         
         else:
             from assist.Engine.features import chatBot

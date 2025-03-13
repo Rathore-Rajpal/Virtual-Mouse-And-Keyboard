@@ -1,88 +1,10 @@
-import json
-from dotenv import load_dotenv
+from cProfile import label
+import pyautogui as autogui
+import time
 import os
-import base64
-from requests import post, get
-import webbrowser
+import random
 
-# Load environment variables from .env file
-load_dotenv()
 
-client_id = os.getenv("CLIENT_ID")
-client_sec = os.getenv("CLIENT_SECRET")
-
-def get_token():
-    # Create authorization string
-    auth_string = client_id + ":" + client_sec
-    auth_bytes = auth_string.encode("utf-8")
-    auth_base64 = str(base64.b64encode(auth_bytes), "utf-8")
     
-    # Spotify API token URL
-    url = "https://accounts.spotify.com/api/token"
+caputure_screenshot()
     
-    # Set headers and data
-    headers = {
-        "Authorization": "Basic " + auth_base64,
-        "Content-Type": "application/x-www-form-urlencoded"
-    }
-    
-    data = {"grant_type": "client_credentials"}
-    
-    # Send POST request
-    result = post(url, headers=headers, data=data)
-    json_result = json.loads(result.content)
-    
-    # Get the access token
-    token = json_result.get("access_token")
-    return token
-
-def get_auth_header(token):
-    return {"Authorization" : "Bearer " + token}
-
-def search_for_song(token, song_name, artist_name):
-    url = "https://api.spotify.com/v1/search"
-    headers = get_auth_header(token)
-    # Search for both song name and artist name
-    query = f"?q=track:{song_name} artist:{artist_name}&type=track&limit=1"
-    
-    query_url = url + query
-    result = get(query_url, headers=headers)
-    json_result = json.loads(result.content)["tracks"]["items"]
-    
-    if len(json_result) == 0:
-        print(f"No track with the name '{song_name}' by '{artist_name}' found.")
-        return None
-    
-    # Return the first track from the search results
-    return json_result[0]
-
-def play_song_on_spotify(song):
-    # Open the song URL in the default web browser
-    webbrowser.open(song['external_urls']['spotify'])
-    print(f"Playing '{song['name']}' by {song['artists'][0]['name']} on Spotify.")
-
-def handle_query(token, query):
-    # Extract song name and artist name from the query
-    if "play" in query.lower():
-        # Assuming the query format is "play {song_name} by {artist_name} on spotify"
-        query = query.lower().replace("play", "").replace("on spotify", "").strip()
-        if "by" in query:
-            song_name, artist_name = map(str.strip, query.split("by"))
-            
-            # Search for the song on Spotify
-            song = search_for_song(token, song_name, artist_name)
-            
-            # If song found, play it on Spotify
-            if song:
-                play_song_on_spotify(song)
-            else:
-                print("Song not found.")
-        else:
-            print("Invalid query format. Use: 'play {song_name} by {artist_name} on spotify'")
-
-# Call the get_token function
-token = get_token()
-
-# Handle the query with both song and artist name
-q = "play prove them wrong by Bella on spotify"
-handle_query(token, q)

@@ -7,6 +7,7 @@ import random
 import functions
 from pyautogui import FailSafeException
 import time
+import os
 
 
 mouse = Controller()
@@ -158,9 +159,10 @@ def detect_gestures(frame, landmarks_list, processed):
 
             # Screenshot
             elif functions.is_screenshot(landmarks_list, thumb_index_dist):
+                folder_path = 'C:\VirtualMouseProject\Screeshots'
                 im1 = pyautogui.screenshot()
                 label = random.randint(1, 1000)
-                im1.save(f'my_screenshot_{label}.png')
+                im1.save(os.path.join(folder_path, f'my_screenshot_{label}.png'))
                 cv2.putText(frame, "Screenshot Taken", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 2)
 
         # Scroll if thumb and index fingers are touching

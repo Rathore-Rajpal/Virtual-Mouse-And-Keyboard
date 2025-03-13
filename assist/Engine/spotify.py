@@ -75,8 +75,36 @@ def play_song_on_spotify(song):
     cm.speak(f"Playing '{song['name']}' by {song['artists'][0]['name']} on Spotify.")
     print(f"Playing '{song['name']}' by {song['artists'][0]['name']} on Spotify.")
 
+def search_for_artist(token, artist_name):
+    url = "https://api.spotify.com/v1/search"
+    headers = get_auth_header(token)
+    
+    # Create a query for searching the artist
+    query = f"?q=artist:{artist_name}&type=artist&limit=1"
+    query_url = url + query
+    result = get(query_url, headers=headers)
+    
+    if result.status_code != 200:
+        print(f"Error fetching the artist: {result.status_code}")
+        return None
+    
+    json_result = json.loads(result.content)["artists"]["items"]
+    
+    if len(json_result) == 0:
+        print(f"No artist with the name '{artist_name}' found.")
+        return None
+    
+    # Return the first artist from the search results
+    return json_result[0]
+
+def open_artist_page_on_spotify(artist):
+    # Open the artist's Spotify page in the default web browser
+    webbrowser.open(artist['external_urls']['spotify'])
+    cm.speak(f"Opening Spotify page for '{artist['name']}'")
+    print(f"Opening Spotify page for '{artist['name']}'")
+
 def handle_query(token, query):
-    # Extract song name and artist name from the query
+    # Extract song name, artist name, or artist page request from the query
     if "play" in query.lower():
         # Assuming the query format is either "play {song_name} by {artist_name} on spotify"
         # or "play {song_name} on spotify"
@@ -98,9 +126,25 @@ def handle_query(token, query):
         else:
             cm.speak("Song not found")
             print("Song not found.")
+    elif "open" in query.lower() and "on spotify" in query.lower():
+        # Assuming the query format is "open {artist_name} on spotify"
+        query = query.lower().replace("open", "").replace("on spotify", "").strip()
+        artist_name = query
+        
+        # Search for the artist on Spotify
+        artist = search_for_artist(token, artist_name)
+        
+        # If artist found, open the Spotify page
+        if artist:
+            open_artist_page_on_spotify(artist)
+        else:
+            cm.speak("Artist not found")
+            print("Artist not found.")
     else:
-        cm.speak("Invalid query format. Use: 'play {song_name} by {artist_name} on spotify' or 'play {song_name} on spotify'")
-        print("Invalid query format. Use: 'play {song_name} by {artist_name} on spotify' or 'play {song_name} on spotify'")
+        cm.speak("Invalid query format. Use: 'play {song_name} by {artist_name} on spotify' or 'open {artist_name} on spotify'")
+        print("Invalid query format. Use: 'play {song_name} by {artist_name} on spotify' or 'open {artist_name} on spotify'")
+
+
         
 def play_pause():
     pyautogui.press('win')
@@ -135,7 +179,3 @@ def play_pause():
                 
     time.sleep(7)
     pyautogui.press('space') #play music
-
-# Call the get_token function
-token = get_token()
-
