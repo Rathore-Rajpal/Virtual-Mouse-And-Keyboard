@@ -1,10 +1,77 @@
-from cProfile import label
-import pyautogui as autogui
-import time
 import os
-import random
+import sys
+import time
+from datetime import datetime
+from plyer import notification
 
+def show_notification(subject):
+    try:
+        # Try standard notification
+        notification.notify(
+            title="Reminder",
+            message=subject,
+            timeout=10
+        )
+    except Exception as e:
+        # Fallback to winotify
+        try:
+            from winotify import Notification, audio
+            toast = Notification(
+                app_id="Reminder App",
+                title="Reminder",
+                msg=subject,
+                duration="long"
+            )
+            toast.add_audio(audio.Default, loop=False)
+            toast.show()
+        except ImportError:
+            print("Error: No notification backends available")
 
-    
-caputure_screenshot()
-    
+def create_reminder_script(subject):
+    content = f'''import time
+from datetime import datetime
+from plyer import notification
+
+notification.notify(
+    title="Reminder",
+    message="{subject}",
+    timeout=10
+)
+time.sleep(15)  # Keep script alive for notification
+'''
+    with open("show_reminder.py", "w") as f:
+        f.write(content)
+    return os.path.abspath("show_reminder.py")
+
+def set_reminder(date, time_str, subject):
+    try:
+        # Create reminder script
+        script_path = create_reminder_script(subject)
+        
+        # Get pythonw path
+        pythonw_path = os.path.join(os.path.dirname(sys.executable), 'pythonw.exe')
+        if not os.path.exists(pythonw_path):
+            raise FileNotFoundError(f"pythonw.exe not found at {pythonw_path}")
+        
+        # Create task scheduler command
+        cmd = (
+            f'schtasks /create /tn "Reminder_{subject}" '
+            f'/tr "\"{pythonw_path}\" \"{script_path}\"" '
+            f'/sc once /st {datetime.strptime(time_str, "%H:%M").strftime("%H:%M")} '
+            f'/sd {datetime.strptime(date, "%Y-%m-%d").strftime("%d/%m/%Y")} '
+            f'/ru {os.getlogin()} '
+            f'/rl HIGHEST '
+            f'/f'
+        )
+        
+        os.system(cmd)
+        print(f"Reminder set successfully for {date} {time_str}")
+        
+        # Immediate test notification
+        show_notification("Reminder Set: " + subject)
+        
+    except Exception as e:
+        print(f"Error setting reminder: {str(e)}")
+
+# Example usage
+set_reminder("2025-03-13", "22:14", "Meeting with client")

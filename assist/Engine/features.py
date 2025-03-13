@@ -18,6 +18,10 @@ from assist.Engine.helper import extract_yt_term, remove_words
 import pvporcupine
 import pyaudio
 import random
+from datetime import datetime
+from plyer import notification
+import sys
+
 
 
 stop_flag = False 
@@ -282,3 +286,45 @@ def caputure_screenshot():
     time.sleep(1)
     label = random.randint(1, 1000)
     img.save(os.path.join(folder_path, f'my_screenshot_{label}.png'))
+    
+
+def create_python_script(subject):
+    python_script_content = f'''
+import time
+from plyer import notification
+
+notification.notify(
+    title="Reminder",
+    message="{subject}",
+    timeout=10
+)
+'''
+    python_script_path = os.path.join(os.getcwd(), "show_reminder.py")
+    with open(python_script_path, "w") as file:
+        file.write(python_script_content)
+    return python_script_path
+
+def set_reminder(reminder_datetime, subject):
+    date_format = reminder_datetime.strftime("%d/%m/%Y")
+    time_format = reminder_datetime.strftime("%H:%M")
+    
+    python_script_path = create_python_script(subject)
+    pythonw_path = os.path.join(os.path.dirname(sys.executable), 'pythonw.exe')
+    
+    if not os.path.isfile(pythonw_path):
+        raise FileNotFoundError("pythonw.exe not found. Ensure Python is installed correctly.")
+    
+    command = (
+        f'schtasks /create /tn "Reminder_{subject}" '
+        f'/tr "\"{pythonw_path}\" \"{python_script_path}\"" '
+        f'/sc once /st {time_format} /sd {date_format} /f'
+    )
+    
+    os.system(command)
+    
+    # Print formatted date and time
+    print(f"Reminder set for {date_format} at {time_format} - {subject}")
+
+
+
+

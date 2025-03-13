@@ -1,4 +1,5 @@
 import time
+import dateparser
 import pyttsx3
 import speech_recognition as sr
 import eel
@@ -130,8 +131,26 @@ def allCommands(message=1):
         
         elif "screenshot" in query.lower():
             from assist.Engine.features import caputure_screenshot
+            speak("capturing screenshot")
             caputure_screenshot()
             speak("Screenshot captured sucessfully")
+            
+        if "set a reminder" in query:
+            from assist.Engine.features import set_reminder
+            speak("Please tell me when you want to set the reminder.'.")
+            reminder_input = takecommand()
+
+            speak("What is the reminder about?")
+            reminder_subject = takecommand()
+
+            # Use dateparser to parse natural language input into a datetime object
+            reminder_datetime = dateparser.parse(reminder_input)
+            
+            if reminder_datetime:
+                set_reminder(reminder_datetime, reminder_subject)
+                speak(f"Your reminder for {reminder_subject} is set for {reminder_datetime}.")
+            else:
+                speak("Sorry, I couldn't understand the date and time. Please try again.")
             
         
         else:
