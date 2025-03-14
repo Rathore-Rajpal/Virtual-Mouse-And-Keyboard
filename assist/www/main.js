@@ -115,5 +115,16 @@ $(document).ready(function () {
         eel.playChatSound()
     });
     
+    
+    document.getElementById('submitEmail').addEventListener('click', function () {
+        const name = document.getElementById('emailName').value;
+        const email = document.getElementById('emailAddress').value;
+        const subject = document.getElementById('emailSubject').value;
+    
+        // You can now pass these values to your Python backend
+        eel.processEmailDetails(name, email, subject);
+    });
+    
+    
 
 });

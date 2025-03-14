@@ -24,8 +24,8 @@ $(document).ready(function () {
             chatBox.innerHTML += `<div class="row justify-content-end mb-4">
             <div class = "width-size">
             <div class="sender_message">${message}</div>
-        </div>`; 
-    
+        </div>`;
+
             // Scroll to the bottom of the chat box
             chatBox.scrollTop = chatBox.scrollHeight;
         }
@@ -40,15 +40,15 @@ $(document).ready(function () {
             <div class = "width-size">
             <div class="receiver_message">${message}</div>
             </div>
-        </div>`; 
-    
+        </div>`;
+
             // Scroll to the bottom of the chat box
             chatBox.scrollTop = chatBox.scrollHeight;
         }
-        
+
     }
 
-    
+
     // Hide Loader and display Face Auth animation
     eel.expose(hideLoader)
     function hideLoader() {
@@ -89,6 +89,20 @@ $(document).ready(function () {
             $("#oval").attr("hidden", false);
         }, 1000)
     }
+
+    eel.expose(toggleEmailSection);
+
+    function toggleEmailSection(show) {
+        const emailSection = document.getElementById('emailSection');
+        const bsOffcanvas = new bootstrap.Offcanvas(emailSection);
+
+        if (show) {
+            bsOffcanvas.show();
+        } else {
+            bsOffcanvas.hide();
+        }
+    }
+
 
 
 

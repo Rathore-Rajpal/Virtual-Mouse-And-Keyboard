@@ -325,6 +325,36 @@
                 </div>
             </div>
         </section>
+        
+        <section id="emailSection" class="offcanvas offcanvas-end email-canvas" tabindex="-1" aria-labelledby="emailSectionLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="emailSectionLabel">Email Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <div class="card mt-4">
+                    <div class="card-header text-center">
+                        <h5 class="text-dark">Email Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <label for="emailName" class="form-label">Recipient Name</label>
+                            <input type="text" class="form-control" id="emailName" placeholder="Enter recipient name">
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailAddress" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="emailAddress" placeholder="Enter recipient email">
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailSubject" class="form-label">Subject</label>
+                            <input type="text" class="form-control" id="emailSubject" placeholder="Enter subject">
+                        </div>
+                        <button id="submitEmail" class="btn btn-primary">Send Email</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
 
     </div>
     <div class="offcanvas offcanvas-start chat-canvas" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"

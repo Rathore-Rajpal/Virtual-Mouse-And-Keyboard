@@ -21,6 +21,7 @@ import random
 from datetime import datetime
 from plyer import notification
 import sys
+from assist.Engine.commands import takecommand
 
 
 
@@ -85,6 +86,14 @@ def PlayYoutube(query):
     search_term = extract_yt_term(query)
     speak("Playing "+search_term+" on YouTube")
     kit.playonyt(search_term)
+    
+import webbrowser
+
+def SearchYoutube(query):
+    search_term = query.lower().replace("search", "").replace("on youtube", "").strip()
+    search_url = f"https://www.youtube.com/results?search_query={search_term}"
+    speak(f"searching for {search_term} on youtube")
+    webbrowser.open(search_url)
     
 def hotword():
     porcupine = None
@@ -279,7 +288,7 @@ def take_note(note):
 
 def caputure_screenshot():
     time.sleep(2)
-    autogui.hotkey('win','m')
+    autogui.hotkey('win','down')
     folder_path = 'C:\\VirtualMouseProject\\Screeshots'
     time.sleep(1)
     img = autogui.screenshot()
@@ -324,6 +333,45 @@ def set_reminder(reminder_datetime, subject):
     
     # Print formatted date and time
     print(f"Reminder set for {date_format} at {time_format} - {subject}")
+    
+@eel.expose
+def processEmailDetails(name, email, subject):
+    try:
+        if name and email and subject:
+            # Open Gmail compose window with recipient email and subject
+            compose_url = f"https://mail.google.com/mail/?view=cm&fs=1&to={email}&su={subject}"
+            webbrowser.open(compose_url)
+            speak(f"Composing an email to {name} with subject: {subject}")
+        else:
+            speak("Please provide all the required details.")
+    except Exception as e:
+        print(f"Error in processing email: {e}")
+        speak("An error occurred while processing the email.")
+
+
+def send_email(query):
+    speak("Whom do you want to send the email to?")
+    recipient_name = takecommand().lower()
+    
+    cursor.execute("SELECT email FROM contacts WHERE LOWER(name) = ?", (recipient_name,))
+    result = cursor.fetchone()
+    print(result)
+
+    if result:
+        email = result[0]
+        speak(f"Found {recipient_name}'s email: {email}. What should be the subject?")
+        subject = takecommand()
+
+        # Open Gmail compose window with recipient email and subject
+        compose_url = f"https://mail.google.com/mail/?view=cm&fs=1&to={email}&su={subject}"
+        webbrowser.open(compose_url)
+        speak(f"Composing an email to {recipient_name} with subject: {subject}")
+    
+    else:
+        # If no contact found, prompt the user to input details via the HTML form
+        eel.toggleEmailSection(True)
+        speak(f"No email found for {recipient_name}. Please provide the details manually.")
+   
 
 
 

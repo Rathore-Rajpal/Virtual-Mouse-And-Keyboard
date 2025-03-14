@@ -290,5 +290,38 @@ p {
   }
 
   /*Face auth end*/
+
+.email-canvas {
+    background-color: #191919; /* Similar to chat-canvas background */
+}
+
+.email-canvas .offcanvas-body {
+    color: white;
+}
+
+.email-canvas .card-header {
+    background-color: #0045ff;
+}
+
+.email-canvas .card-body {
+    background-color: #0dcaf014;
+    color: white;
+}
+
+.email-canvas input {
+    background-color: #222;
+    color: white;
+    border: 1px solid #444;
+}
+
+.email-canvas input:focus {
+    border-color: cyan;
+    box-shadow: none;
+}
+
+.btn-close {
+    filter: invert(100%);
+}
+
   
   

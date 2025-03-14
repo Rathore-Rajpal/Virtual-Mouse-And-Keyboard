@@ -64,8 +64,12 @@ def allCommands(message=1):
             openCommand(query)
         
         elif "on youtube" in query:
-            from assist.Engine.features import PlayYoutube
-            PlayYoutube(query)
+            if "search" in query:
+                from assist.Engine.features import SearchYoutube
+                SearchYoutube(query)
+            else:
+                from assist.Engine.features import PlayYoutube
+                PlayYoutube(query)
         
         elif any(kw in query for kw in ["send message", "call", "video call", "send a message"]):
             print("Handling WhatsApp command")
@@ -135,7 +139,7 @@ def allCommands(message=1):
             caputure_screenshot()
             speak("Screenshot captured sucessfully")
             
-        if "set a reminder" in query:
+        elif "set a reminder" in query:
             from assist.Engine.features import set_reminder
             speak("Please tell me when you want to set the reminder.'.")
             reminder_input = takecommand()
@@ -151,6 +155,10 @@ def allCommands(message=1):
                 speak(f"Your reminder for {reminder_subject} is set for {reminder_datetime}.")
             else:
                 speak("Sorry, I couldn't understand the date and time. Please try again.")
+                
+        elif ("send a email" in query or "send email" in query or "send a mail" in query or "send an email" in query or "draft a mail" in query):
+            from assist.Engine.features import send_email
+            send_email(query)
             
         
         else:

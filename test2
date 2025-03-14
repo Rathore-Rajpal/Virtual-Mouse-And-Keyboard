@@ -1,0 +1,17 @@
+import webbrowser
+
+from assist.Engine.commands import speak
+from assist.Engine.helper import extract_yt_term
+
+def SearchYoutube(query):
+    search_term = extract_yt_term(query)  # Assuming you have a function to extract the search term
+    speak("Searching " + search_term + " on YouTube")
+    
+    # Format the search URL
+    search_url = f"https://www.youtube.com/results?search_query={search_term}"
+    
+    # Open the YouTube search page in a web browser
+    webbrowser.open(search_url)
+
+# Example usage
+SearchYoutube("Play latest music videos")
