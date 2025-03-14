@@ -1,11 +1,15 @@
-import webbrowser
-
+import os
+import psutil
 from assist.Engine.commands import speak
 
-def SearchYoutube(query):
+def close_app(query):
+    # Extract the app name from the query
+    app_name = query.lower().replace("close ", "").strip()
+
+    # Print all currently running apps
+    print("Currently running apps:")
+    for process in psutil.process_iter(['pid', 'name']):
+        print(f"App Name: {process.info['name']} (PID: {process.info['pid']})")
+
+close_app("close notepad")
     
-    search_term = query.lower().replace("search", "").replace("on youtube", "").strip()
-    search_url = f"https://www.youtube.com/results?search_query={search_term}"
-    webbrowser.open(search_url)
-
-

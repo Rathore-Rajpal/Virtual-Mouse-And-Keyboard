@@ -1,3 +1,4 @@
+import sys
 import time
 import dateparser
 import pyttsx3
@@ -5,6 +6,7 @@ import speech_recognition as sr
 import eel
 import os
 import assist.Engine.spotify as sp
+import pyautogui as auto
 
 @eel.expose
 def speak(text):
@@ -96,10 +98,15 @@ def allCommands(message=1):
             else:
                 print("Contact not found!")
                 
-        elif "search" in query and ("on google" in query or "on internet" in query):
-            print("Handling 'search on Google' command")  # Debugging statement
-            from assist.Engine.features import google_search
-            google_search(query)
+        elif "search" in query:
+            if "on google" in query or "on internet" in query:
+                print("Handling 'search on Google' command")
+                from assist.Engine.features import google_search
+                google_search(query)
+            else:
+                print("Handling 'product search on website' command")
+                from assist.Engine.searchingProduct import search_product
+                search_product(query)
         
         elif "on spotify" in query or "play on spotify" in query:
             print("Handling 'Spotify' command")
@@ -160,6 +167,17 @@ def allCommands(message=1):
             from assist.Engine.features import send_email
             send_email(query)
             
+        elif "close" in query or "terminate" in query:
+            from assist.Engine.features import close_app
+            close_app(query)
+            
+        elif "bye-bye" in query.lower():
+            speak("Terminating the assistant...")
+            auto.hotkey('alt','f4')
+            
+        elif "search for " in query:
+            from assist.Engine.searchingProduct import search_product
+            search_product(query)
         
         else:
             from assist.Engine.features import chatBot

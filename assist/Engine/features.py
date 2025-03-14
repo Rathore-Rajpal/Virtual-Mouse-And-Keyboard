@@ -22,6 +22,8 @@ from datetime import datetime
 from plyer import notification
 import sys
 from assist.Engine.commands import takecommand
+import psutil
+
 
 
 
@@ -371,6 +373,31 @@ def send_email(query):
         # If no contact found, prompt the user to input details via the HTML form
         eel.toggleEmailSection(True)
         speak(f"No email found for {recipient_name}. Please provide the details manually.")
+        
+def close_app(query):
+    # Extract the app name from the query
+    app_name = query.lower().replace("close ", "").strip()
+
+    # Check if the app is open
+    is_running = False
+    for process in psutil.process_iter(['pid', 'name']):
+        if app_name in process.info['name'].lower():
+            is_running = True
+            pid = process.info['pid']
+            print(f"Closing {app_name} (PID: {pid})...")
+            
+            # Terminate the app
+            try:
+                os.kill(pid, 9)  # 9 is the signal for termination
+                print(f"{app_name} closed successfully.")
+                speak(f"{app_name} closed successfully.")
+            except Exception as e:
+                print(f"Error occurred while closing {app_name}: {e}")
+            break
+    
+    if not is_running:
+        speak(f"{app_name} is not running.")
+        print(f"{app_name} is not running.")
    
 
 
