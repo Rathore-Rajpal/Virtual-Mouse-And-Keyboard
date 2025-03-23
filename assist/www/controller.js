@@ -107,19 +107,19 @@ $(document).ready(function () {
     function updateCodeContent(code) {
         const codeSection = document.getElementById('codeSection');
         const codeElement = codeSection.querySelector('code');
-        
+
         // Update code content
         codeElement.textContent = code;
-        
+
         // Update line numbers
         const lineNumbers = code.split('\n')
-                                .map((_, i) => i + 1)
-                                .join('<br>');
+            .map((_, i) => i + 1)
+            .join('<br>');
         codeSection.querySelector('.line-numbers').innerHTML = lineNumbers;
-        
+
         // Highlight syntax
         Prism.highlightAllUnder(codeSection);
-        
+
         // Show section after content is updated
         setTimeout(() => {
             const bsOffcanvas = new bootstrap.Offcanvas(codeSection);
@@ -133,6 +133,20 @@ $(document).ready(function () {
         const codeSection = document.getElementById('codeSection');
         const bsOffcanvas = new bootstrap.Offcanvas(codeSection);
         show ? bsOffcanvas.show() : bsOffcanvas.hide();
+    }
+
+    eel.expose(toggleContactsSection);
+
+    // Function to toggle the contacts section
+    function toggleContactsSection(show) {
+        const contactsSection = document.getElementById('contactsCanvas');
+        const bsOffcanvas = new bootstrap.Offcanvas(contactsSection);
+
+        if (show) {
+            bsOffcanvas.show(); // Show the contacts offcanvas
+        } else {
+            bsOffcanvas.hide(); // Hide the contacts offcanvas
+        }
     }
 
 

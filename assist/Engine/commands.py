@@ -190,7 +190,7 @@ def allCommands(message=1):
             from assist.Engine.searchingProduct import search_product
             search_product(query)
             
-        elif "write a code" in query or "generate a code" in query:
+        elif "write a code" in query or "generate a code" in query or "write the code" in query:
             from assist.Engine.features import codeBot
             codeBot(query)
             
@@ -225,6 +225,9 @@ def allCommands(message=1):
             speak("Starting virtual keyboard")
             eel.ShowHood()
             subprocess.run(['python','virtual_ketboard.html.py'])
+            
+        elif "conatcts table" in query:
+            eel.toggleContactsSection(True)
 
             
         else:
