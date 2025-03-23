@@ -115,9 +115,129 @@ cursor = conn.cursor()
 #cursor.execute(query)
 #conn.commit()
 
-query = "UPDATE sys_command set name = 'imagemaster' where id = 18"
+#query = "UPDATE sys_command set name = 'imagemaster' where id = 18"
+#cursor.execute(query)
+#conn.commit() 
+
+# Insert statements for popular websites
+
+# Google
+query = "INSERT INTO web_command VALUES (null, 'google', 'https://www.google.com/')"
 cursor.execute(query)
 conn.commit()
+
+# Facebook
+query = "INSERT INTO web_command VALUES (null, 'facebook', 'https://www.facebook.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Twitter
+query = "INSERT INTO web_command VALUES (null, 'twitter', 'https://www.twitter.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Instagram
+query = "INSERT INTO web_command VALUES (null, 'instagram', 'https://www.instagram.com/')"
+cursor.execute(query)
+conn.commit()
+
+# LinkedIn
+query = "INSERT INTO web_command VALUES (null, 'linkedin', 'https://www.linkedin.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Reddit
+query = "INSERT INTO web_command VALUES (null, 'reddit', 'https://www.reddit.com/')"
+cursor.execute(query)
+conn.commit()
+
+# GitHub
+query = "INSERT INTO web_command VALUES (null, 'github', 'https://www.github.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Stack Overflow
+query = "INSERT INTO web_command VALUES (null, 'stackoverflow', 'https://stackoverflow.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Wikipedia
+query = "INSERT INTO web_command VALUES (null, 'wikipedia', 'https://www.wikipedia.org/')"
+cursor.execute(query)
+conn.commit()
+
+# Amazon
+query = "INSERT INTO web_command VALUES (null, 'amazon', 'https://www.amazon.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Netflix
+query = "INSERT INTO web_command VALUES (null, 'netflix', 'https://www.netflix.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Spotify
+query = "INSERT INTO web_command VALUES (null, 'spotify', 'https://www.spotify.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Dropbox
+query = "INSERT INTO web_command VALUES (null, 'dropbox', 'https://www.dropbox.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Zoom
+query = "INSERT INTO web_command VALUES (null, 'zoom', 'https://zoom.us/')"
+cursor.execute(query)
+conn.commit()
+
+# Pinterest
+query = "INSERT INTO web_command VALUES (null, 'pinterest', 'https://www.pinterest.com/')"
+cursor.execute(query)
+conn.commit()
+
+# WhatsApp Web
+query = "INSERT INTO web_command VALUES (null, 'whatsapp web', 'https://web.whatsapp.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Microsoft
+query = "INSERT INTO web_command VALUES (null, 'microsoft', 'https://www.microsoft.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Insert statements for more popular websites
+
+# Gmail
+query = "INSERT INTO web_command VALUES (null, 'gmail', 'https://mail.google.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Google Photos
+query = "INSERT INTO web_command VALUES (null, 'google photos', 'https://photos.google.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Apple
+query = "INSERT INTO web_command VALUES (null, 'apple', 'https://www.apple.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Google Maps
+query = "INSERT INTO web_command VALUES (null, 'google maps', 'https://maps.google.com/')"
+cursor.execute(query)
+conn.commit()
+
+# iCloud
+query = "INSERT INTO web_command VALUES (null, 'icloud', 'https://www.icloud.com/')"
+cursor.execute(query)
+conn.commit()
+
+# Google Drive
+query = "INSERT INTO web_command VALUES (null, 'google drive', 'https://drive.google.com/')"
+cursor.execute(query)
+conn.commit()
+
 
 
 
