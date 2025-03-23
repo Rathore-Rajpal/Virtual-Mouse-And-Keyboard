@@ -1,6 +1,9 @@
+import subprocess
 import sys
 import time
+import webbrowser
 import dateparser
+import keyboard
 import pyttsx3
 import speech_recognition as sr
 import eel
@@ -87,7 +90,7 @@ def allCommands(message=1):
                     query = takecommand()
                     print(f"Message to send: {query}")
                 
-                elif "phone call" in query or "call" in query:
+                elif "phone call" in query:
                     flag = 'call'
                 
                 elif "video call" in query:
@@ -175,10 +178,55 @@ def allCommands(message=1):
             speak("Terminating the assistant...")
             auto.hotkey('alt','f4')
             
+        elif "generate image" in query or "generate an image" in query:
+            from assist.Engine.image_generator import generate_image
+            speak("What image you need to generate: ")
+            prompt = takecommand()
+            speak(f"Generating image:{prompt}")
+            generate_image(prompt)
+            speak("Image Generated Sucessfully")
+            
         elif "search for " in query:
             from assist.Engine.searchingProduct import search_product
             search_product(query)
+            
+        elif "write a code" in query or "generate a code" in query:
+            from assist.Engine.features import codeBot
+            codeBot(query)
+            
+        elif "shortest route" in query or "shortest distance" in query or "google maps" in query or "maps" in query or "distance" in query:
+            from assist.Engine.features import open_shortest_route
+            open_shortest_route(query)
         
+        elif "start image master" in query or "lauch image master" in query:
+            speak("Launching Image Master")
+            eel.ShowHood()
+            file_path = r'assist\Engine\ImageBot\index.html'
+            webbrowser.open(file_path)
+            python_interpreter = r'C:\VirtualMouseProject\envjarvis\Scripts\python.exe'
+            subprocess.run([python_interpreter, r'assist\Engine\ImageBot\app.py'])
+            
+            
+        elif "start code master" in query or "launch code master" in query:
+            speak("Launching Code Master")
+            eel.ShowHood()
+            file_path = r'assist\Engine\CodingBuddy\index.html'
+            webbrowser.open(file_path)
+            python_interpreter = r'C:\VirtualMouseProject\envjarvis\Scripts\python.exe'
+            subprocess.run([python_interpreter, r'assist\Engine\CodingBuddy\app.py'])
+            
+        elif "start virtual mouse" in query or "launch virtual mouse" in query:
+            speak("Launching virtual mouse")
+            eel.ShowHood()
+            subprocess.run(['python','virtualMouse.py'])
+
+            
+        elif "start virtual keyboard" in query or "launch virtual keyboard" in query:
+            speak("Starting virtual keyboard")
+            eel.ShowHood()
+            subprocess.run(['python','virtual_ketboard.html.py'])
+
+            
         else:
             from assist.Engine.features import chatBot
             chatBot(query)

@@ -12,7 +12,6 @@ body {
     justify-content: center;
     align-items: center;
     margin-top: 50px;
-    /* Adjust this value to move the circular design down */
 }
 
 .square span:nth-child(1),
@@ -173,9 +172,12 @@ p {
 }
 
 .siri-message {
-    word-wrap: break-word; /* Allows long messages to wrap */
-    max-width: 80%; /* Limit the width of the message */
-    margin: 0 auto; /* Center the message horizontally */
+    word-wrap: break-word;
+    /* Allows long messages to wrap */
+    max-width: 80%;
+    /* Limit the width of the message */
+    margin: 0 auto;
+    /* Center the message horizontally */
 }
 
 
@@ -221,22 +223,22 @@ p {
     justify-content: center;
     align-items: center;
     animation: change-view 2s ease-in infinite;
-  }
-  
-  @keyframes change-view {
-  
+}
+
+@keyframes change-view {
+
     0%,
     50% {
-      transform: rotate(-0deg) skew(00deg) translateX(calc(0 * var(--i))) translateY(calc(-0px * var(--i)));
+        transform: rotate(-0deg) skew(00deg) translateX(calc(0 * var(--i))) translateY(calc(-0px * var(--i)));
     }
-  
+
     70%,
     100% {
-      transform: rotate(-80deg) skew(30deg) translateX(calc(45px * var(--i))) translateY(calc(-35px * var(--i)));
+        transform: rotate(-80deg) skew(30deg) translateX(calc(45px * var(--i))) translateY(calc(-35px * var(--i)));
     }
-  }
-  
-  svg {
+}
+
+svg {
     position: absolute;
     transition: 0.5s;
     transform-origin: center;
@@ -245,54 +247,55 @@ p {
     fill: none;
     animation: change-view 5s ease-in-out infinite alternate;
     filter: drop-shadow(0 0 12px #00aaff);
-  }
-  
-  #big-centro,
-  #outter1,
-  #solo-lines,
-  #center,
-  #outter-center,
-  #bottom-dots,
-  #center-lines,
-  #squares,
-  #top-dots {
+}
+
+#big-centro,
+#outter1,
+#solo-lines,
+#center,
+#outter-center,
+#bottom-dots,
+#center-lines,
+#squares,
+#top-dots {
     transform-origin: center;
     animation: rotate 4s ease-in-out infinite alternate;
-  }
-  
-  #big-centro {
+}
+
+#big-centro {
     animation-delay: -1.5s;
-  }
-  
-  #outter1 {
+}
+
+#outter1 {
     animation-delay: -1.2s;
-  }
-  
-  #center {
+}
+
+#center {
     animation-delay: -2.2s;
-  }
-  
-  #bottom-dots,
-  #top-dots {
+}
+
+#bottom-dots,
+#top-dots {
     animation-duration: 7s;
-  }
-  
-  #center-lines,
-  #outter-center {
+}
+
+#center-lines,
+#outter-center {
     animation-duration: 6s;
     animation-delay: -3s;
-  }
-  
-  @keyframes rotate {
-    to {
-      transform: rotate(360deg);
-    }
-  }
+}
 
-  /*Face auth end*/
+@keyframes rotate {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/*Face auth end*/
 
 .email-canvas {
-    background-color: #191919; /* Similar to chat-canvas background */
+    background-color: #191919;
+    /* Similar to chat-canvas background */
 }
 
 .email-canvas .offcanvas-body {
@@ -323,5 +326,60 @@ p {
     filter: invert(100%);
 }
 
-  
-  
+.code-canvas {
+    background: #2d2d2d;
+    color: #ccc;
+    height: 70vh;
+}
+
+.offcanvas-body {
+    overflow-y: auto;
+    
+}
+
+.code-header {
+    border-bottom: 1px solid #404040;
+    padding: 1rem;
+}
+
+.code-container {
+    background: #1e1e1e;
+    border-radius: 4px;
+    padding: 1.5rem;
+    position: relative;
+    font-family: 'Fira Code', 'Consolas', monospace;
+    font-size: 0.9em;
+    overflow-x: auto;
+    height: calc(100% - 60px);
+    /* Adjust height to fit within the off-canvas */
+}
+
+.copy-btn {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    background: #3a3a3a;
+    color: #fff;
+    border: 1px solid #4a4a4a;
+    padding: 5px 15px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+.copy-btn:hover {
+    background: #4a4a4a;
+    border-color: #5a5a5a;
+}
+
+.line-numbers {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    color: #666;
+    user-select: none;
+}
+
+pre {
+    margin: 0;
+    padding-left: 40px;
+}

@@ -130,7 +130,8 @@ def detect_gestures(frame, landmarks_list, processed):
 
         # Minimize window gesture: thumb and middle finger stay together for 1 second
         elif functions.is_minimize_window_gesture(landmarks_list) and current_time - gesture_start_time > 1:
-            pyautogui.hotkey('win', 'm')  # Minimize the current window
+            pyautogui.hotkey('win', 'down')
+            pyautogui.hotkey('win', 'down')# Minimize the current window
             cv2.putText(frame, "Window Minimized", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
             gesture_start_time = None  # Reset gesture start time
 

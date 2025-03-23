@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddy CodeMaster</title>
+    <link rel="shortcut icon" href="assets/img/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/base16/material-darker.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <button class="toggle-history" onclick="toggleHistory()">☰</button>
+    
+    <div class="history-panel">
+        <div class="history-header">
+            <div class="history-title">Code History</div>
+            <div class="history-controls">
+                <input type="text" id="history-search" placeholder="Search history...">
+                <button class="clear-history" onclick="clearHistory()">Clear History</button>
+            </div>
+        </div>
+        <div id="history-list"></div>
+    </div>
+
+    <div class="main-container">
+        <div class="header">
+            <div class="bot-icon">
+                <i class="fas fa-robot"></i>
+            </div>
+            <h1>Buddy CodeMaster</h1>
+            <p>Advanced AI-Powered Code Assistant</p>
+        </div>
+
+        <div class="chat-container">
+            <div class="message-container" id="message-container">
+                <div class="message bot-message">
+                    <div class="message-header">
+                        <i class="fas fa-robot"></i>
+                        <span>CodeMaster</span>
+                    </div>
+                    <div class="code-block">
+                        <pre><code class="language-python"># Start by typing your coding prompt\n# Example: "Create a Python function to calculate Fibonacci sequence"</code></pre>
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <input type="text" id="user-input" 
+                           placeholder="Enter coding prompt (e.g., 'Python function to reverse string')..."
+                           oninput="showSuggestions(this.value)">
+                    <div id="suggestions"></div>
+                </div>
+                <button id="generate-btn">
+                    <i class="fas fa-magic"></i>
+                    Generate Code
+                </button>
+            </div>
+        </div>
+
+        <div class="loader" id="loader">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

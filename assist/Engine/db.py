@@ -115,6 +115,17 @@ cursor = conn.cursor()
 #cursor.execute(query)
 #conn.commit()
 
+query = "UPDATE sys_command set name = 'imagemaster' where id = 18"
+cursor.execute(query)
+conn.commit()
+
+
+
+
+
+
+
+
 
 
 

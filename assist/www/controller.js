@@ -103,8 +103,37 @@ $(document).ready(function () {
         }
     }
 
+    eel.expose(updateCodeContent);
+    function updateCodeContent(code) {
+        const codeSection = document.getElementById('codeSection');
+        const codeElement = codeSection.querySelector('code');
+        
+        // Update code content
+        codeElement.textContent = code;
+        
+        // Update line numbers
+        const lineNumbers = code.split('\n')
+                                .map((_, i) => i + 1)
+                                .join('<br>');
+        codeSection.querySelector('.line-numbers').innerHTML = lineNumbers;
+        
+        // Highlight syntax
+        Prism.highlightAllUnder(codeSection);
+        
+        // Show section after content is updated
+        setTimeout(() => {
+            const bsOffcanvas = new bootstrap.Offcanvas(codeSection);
+            bsOffcanvas.show();
+        }, 100);
+    }
 
-
+    // Existing toggleCodeSection remains the same
+    eel.expose(toggleCodeSection);
+    function toggleCodeSection(show) {
+        const codeSection = document.getElementById('codeSection');
+        const bsOffcanvas = new bootstrap.Offcanvas(codeSection);
+        show ? bsOffcanvas.show() : bsOffcanvas.hide();
+    }
 
 
 });

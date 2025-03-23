@@ -1,0 +1,315 @@
+/* style.css */
+:root {
+    --primary-color: #6366f1;
+    --secondary-color: #8b5cf6;
+    --accent-color: #ec4899;
+    --dark-bg: #0f172a;
+    --darker-bg: #1e293b;
+    --text-light: #f8fafc;
+    --border-color: #334155;
+    --glass-bg: rgba(30, 41, 59, 0.6);
+    --gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #ec4899 100%);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+
+body {
+    background: var(--dark-bg);
+    color: var(--text-light);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-image: radial-gradient(circle at 1px 1px, var(--border-color) 1px, transparent 0);
+    background-size: 40px 40px;
+}
+
+.main-container {
+    width: 100%;
+    max-width: 1200px;
+    padding: 2rem;
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+}
+
+.gradient-border {
+    padding: 2rem;
+    position: relative;
+    border-radius: 1rem;
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.header h1 {
+    font-size: 3.5rem;
+    background: var(--gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 1rem;
+    animation: gradientFlow 5s ease infinite;
+}
+
+.pro-badge {
+    font-size: 1rem;
+    background: var(--gradient);
+    color: white;
+    padding: 0.2rem 0.8rem;
+    border-radius: 2rem;
+    margin-left: 1rem;
+    vertical-align: super;
+}
+
+.input-container {
+    margin: 2rem 0;
+    position: relative;
+}
+
+.glassmorphism {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    border-radius: 1rem;
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.input-group i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--primary-color);
+}
+
+#user-input {
+    width: 100%;
+    padding: 1.25rem 1rem 1.25rem 3rem;
+    border: none;
+    border-radius: 0.75rem;
+    background: var(--darker-bg);
+    color: var(--text-light);
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+}
+
+#user-input:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-color);
+}
+
+.char-counter {
+    position: absolute;
+    right: 1rem;
+    bottom: -1.5rem;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    opacity: 0.7;
+}
+
+.gradient-btn {
+    width: 100%;
+    padding: 1.25rem;
+    border: none;
+    border-radius: 0.75rem;
+    background: var(--gradient);
+    color: white;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gradient-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(99, 102, 241, 0.4);
+}
+
+.image-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin: 2rem 0;
+}
+
+.generated-image {
+    width: 100%;
+    border-radius: 1rem;
+    aspect-ratio: 1/1;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+    cursor: zoom-in;
+}
+
+.generated-image:hover {
+    transform: scale(1.03);
+}
+
+.history-panel h2 {
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.history-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.5rem;
+}
+
+.history-item {
+    position: relative;
+    border-radius: 0.75rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.history-item:hover {
+    transform: translateY(-5px);
+}
+
+.history-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+}
+
+.history-item::after {
+    content: attr(data-prompt);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+    color: white;
+    padding: 1rem;
+    font-size: 0.9rem;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.history-item:hover::after {
+    opacity: 1;
+}
+
+@keyframes gradientFlow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+.loader {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+    margin: 2rem 0;
+}
+
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 4px solid var(--darker-bg);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.progress-bar {
+    width: 200px;
+    height: 4px;
+    background: var(--darker-bg);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.progress-bar::after {
+    content: '';
+    display: block;
+    width: 50%;
+    height: 100%;
+    background: var(--gradient);
+    animation: progress 2s ease infinite;
+}
+
+.toast {
+    position: fixed;
+    bottom: 2rem;
+    right: -100%;
+    background: var(--darker-bg);
+    color: var(--text-light);
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+}
+
+.toast.show {
+    right: 2rem;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes progress {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(200%); }
+}
+
+.image-card {
+    position: relative;
+    border-radius: 1rem;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+}
+
+.image-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.3s ease;
+}
+
+.image-card:hover .image-overlay {
+    opacity: 1;
+}
+
+.download-btn {
+    background: var(--gradient);
+    border: none;
+    padding: 12px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.download-btn:hover {
+    transform: scale(1.1);
+}
+
+.download-btn i {
+    color: white;
+    font-size: 1.2rem;
+}

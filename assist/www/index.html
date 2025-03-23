@@ -21,6 +21,12 @@
     <!-- Particle js -->
     <link rel="stylesheet" href="assets/vendors/textillate-master/assets/animate.css">
 
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+
     <link rel="stylesheet" href="style.css">
 </head>
 
@@ -325,8 +331,9 @@
                 </div>
             </div>
         </section>
-        
-        <section id="emailSection" class="offcanvas offcanvas-end email-canvas" tabindex="-1" aria-labelledby="emailSectionLabel">
+
+        <section id="emailSection" class="offcanvas offcanvas-end email-canvas" tabindex="-1"
+            aria-labelledby="emailSectionLabel">
             <div class="offcanvas-header">
                 <h5 class="offcanvas-title" id="emailSectionLabel">Email Details</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -343,7 +350,8 @@
                         </div>
                         <div class="mb-3">
                             <label for="emailAddress" class="form-label">Email Address</label>
-                            <input type="email" class="form-control" id="emailAddress" placeholder="Enter recipient email">
+                            <input type="email" class="form-control" id="emailAddress"
+                                placeholder="Enter recipient email">
                         </div>
                         <div class="mb-3">
                             <label for="emailSubject" class="form-label">Subject</label>
@@ -354,7 +362,43 @@
                 </div>
             </div>
         </section>
-        
+
+        <section class="offcanvas offcanvas-top code-canvas" tabindex="-1" id="codeSection"
+            aria-labelledby="codeSectionLabel">
+            <div class="offcanvas-header code-header">
+                <h3 class="offcanvas-title" id="codeSectionLabel">
+                    <i class="fas fa-code me-2"></i>Code Viewer
+                </h3>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+                <div class="code-container shadow-lg">
+                    <button class="copy-btn" onclick="copyCode()">
+                        <i class="fas fa-copy me-2"></i>Copy
+                    </button>
+                    <div class="line-numbers">
+                        <!-- Generate line numbers dynamically -->
+                        <span>1<br>2<br>3<br>4<br>5<br>6<br>7</span>
+                    </div>
+                    <pre><code class="language-javascript">
+                      
+                    </code></pre>
+                </div>
+                <div class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3"
+                    role="alert" aria-live="assertive" aria-atomic="true" id="copyToast">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            Code copied to clipboard!
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
 
     </div>
     <div class="offcanvas offcanvas-start chat-canvas" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
@@ -396,6 +440,15 @@
             <script src="main.js"></script>
             <script src="/eel.js"></script>
             <script type="text/javascript" src="/controller.js"></script>
+            <script>
+                function copyCode() {
+                    const code = document.querySelector('.code-container code').innerText;
+                    navigator.clipboard.writeText(code).then(() => {
+                        const toast = new bootstrap.Toast(document.getElementById('copyToast'));
+                        toast.show();
+                    });
+                }
+            </script>
 </body>
 
 </html>

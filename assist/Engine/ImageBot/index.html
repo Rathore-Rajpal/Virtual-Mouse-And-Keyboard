@@ -1,0 +1,56 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buddy ImageMaster</title>
+    <link rel="shortcut icon" href="assets/img/favicon-32x32.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="theme-toggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="main-container">
+        <header class="header animate__animated animate__fadeInDown">
+            <div class="gradient-border">
+                <h1>Buddy ImageMaster<span class="pro-badge">PRO</span></h1>
+                <p>Transform Ideas into Stunning Visuals</p>
+            </div>
+        </header>
+
+        <div class="input-container glassmorphism">
+            <div class="input-group">
+                <i class="fas fa-palette"></i>
+                <input type="text" id="user-input" placeholder="Describe your vision...">
+                <div class="char-counter"><span id="char-count">0</span>/150</div>
+            </div>
+            <button id="generate-btn" class="gradient-btn" type="button">
+                <i class="fas fa-wand-magic-sparkles"></i>
+                Generate Image..
+            </button>
+        </div>
+
+        <div class="loader" id="loader" style="display: none;">
+            <div class="spinner"></div>
+            <div class="progress-bar"></div>
+            <span class="loading-text">Materializing your vision...</span>
+        </div>
+
+        <div class="image-grid" id="image-grid"></div>
+
+        <div class="history-panel glassmorphism">
+            <h2><i class="fas fa-clock-rotate-left"></i> Creation History</h2>
+            <div class="history-grid" id="history-list"></div>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

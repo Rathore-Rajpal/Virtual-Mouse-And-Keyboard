@@ -7,6 +7,7 @@ import subprocess
 import time
 import webbrowser
 from hugchat import hugchat
+import keyboard
 from playsound import playsound
 import eel
 import pyautogui as autogui
@@ -15,6 +16,7 @@ import os
 import pywhatkit as kit 
 from assist.Engine.commands import speak
 from assist.Engine.helper import extract_yt_term, remove_words
+from assist.Engine.helper import extract_location
 import pvporcupine
 import pyaudio
 import random
@@ -23,8 +25,8 @@ from plyer import notification
 import sys
 from assist.Engine.commands import takecommand
 import psutil
-
-
+import urllib.parse
+import speech_recognition as sr
 
 
 stop_flag = False 
@@ -399,6 +401,70 @@ def close_app(query):
         speak(f"{app_name} is not running.")
         print(f"{app_name} is not running.")
    
+   
+def codeBot(query):
+    global stop_flag
+    try:
+        # Extract core prompt
+        prompt = query.lower().replace("write a code to", "").strip()
+        speak(f"Generating code for {prompt}...")
+
+        # Initialize chatbot
+        chatbot = hugchat.ChatBot(cookie_path="assist\\Engine\\cookies.json")
+        conv_id = chatbot.new_conversation()
+        chatbot.change_conversation(conv_id)
+
+        # Get response
+        code_response = chatbot.chat(f"Write code for {prompt}. Return only raw code without markdown.")
+        
+        # Extract text from Message object
+        cleaned_code = code_response.text.replace("```", "").strip()
+        
+        # Directly update UI before returning
+        eel.updateCodeContent(cleaned_code)
+        
+        return cleaned_code  # Return simple string instead of dict
+
+    except Exception as e:
+        error_msg = f"Code Error: {str(e)}"
+        speak(error_msg)
+        eel.receiverText(error_msg)
+        return ""
+    
+def open_shortest_route(query):
+    # Extract source and destination from the query
+    source, destination = extract_location(query)
+
+    if source and destination:
+        # Construct Google Maps URL
+        base_url = "https://www.google.com/maps/dir/"
+        source_encoded = urllib.parse.quote(source)
+        destination_encoded = urllib.parse.quote(destination)
+
+        # Create the full URL and open in browser
+        maps_url = f"{base_url}{source_encoded}/{destination_encoded}"
+        webbrowser.open(maps_url)
+        speak(f"Opening shortest route from {source} to {destination} on Google Maps.")
+        print(f"Opening shortest route from {source} to {destination} on Google Maps.")
+    else:
+        # If unable to identify locations, prompt user for source and destination
+        speak("Sorry, I couldn't understand the locations in the query.")
+        time.sleep(1)
+        speak("What will be your source location?")
+        source = takecommand()
+        speak("What will be your destination?")
+        destination = takecommand()
+
+        # Open the route based on user input
+        maps_url2 = f"https://www.google.com/maps/dir/{urllib.parse.quote(source)}/{urllib.parse.quote(destination)}"
+        webbrowser.open(maps_url2)
+        speak(f"Opening shortest route from {source} to {destination} on Google Maps.")
+
+
+
+
+
+
 
 
 
