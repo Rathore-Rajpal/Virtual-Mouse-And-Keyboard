@@ -135,32 +135,27 @@ $(document).ready(function () {
         show ? bsOffcanvas.show() : bsOffcanvas.hide();
     }
 
-   // Add these functions to your existing JavaScript
-eel.expose(showResponseSection);
-function showResponseSection(initialContent) {
-    const responseSection = document.getElementById('responseSection');
-    const responseContent = document.querySelector('.response-content');
-    
-    // Show loading state
-    responseContent.innerHTML = formatResponse(initialContent);
-    responseContent.classList.add('loading');
-    
-    // Open the panel
-    new bootstrap.Offcanvas(responseSection).show();
-}
+    // Replace existing response functions with these
+    eel.expose(updateResponseContent);
+    function updateResponseContent(content) {
+        const responseSection = document.getElementById('responseSection');
+        const responseElement = responseSection.querySelector('.response-content');
 
-eel.expose(updateResponseContent);
-function updateResponseContent(content) {
-    const responseContent = document.querySelector('.response-content');
-    responseContent.innerHTML = formatResponse(content);
-    responseContent.classList.remove('loading');
-    
-    // Keep panel open
-    const responseSection = document.getElementById('responseSection');
-    if (!bootstrap.Offcanvas.getInstance(responseSection)) {
-        new bootstrap.Offcanvas(responseSection).show();
+        // Format and update content
+        responseElement.innerHTML = formatResponse(content);
+
+        // Show section if not visible
+        if (!bootstrap.Offcanvas.getInstance(responseSection)) {
+            new bootstrap.Offcanvas(responseSection).show();
+        }
+
+        // Update line numbers if needed
+        const lineNumbers = content.split('\n')
+            .map((_, i) => i + 1)
+            .join('<br>');
+        responseSection.querySelector('.line-numbers').innerHTML = lineNumbers;
     }
-}
+
 
 
 

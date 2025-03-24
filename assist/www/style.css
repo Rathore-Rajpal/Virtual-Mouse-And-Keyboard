@@ -451,128 +451,185 @@ pre {
 /*Ai Start*/
 
 .response-canvas {
-    background-color: #1a1a2e;
-    background-image: linear-gradient(135deg, #0f0f2d 0%, #1a1a2e 50%, #16213e 100%);
-    color: #e0e0e0;
-    height: 60vh;
-    max-height: 60vh;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    background: linear-gradient(135deg, #0a0a1a 0%, #1a1a3a 100%);
+    color: #f0f4f8;
+    height: 70vh;
+    max-height: 70vh;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .response-header {
-    background: linear-gradient(90deg, #3a3a8a 0%, #4a4ac2 100%);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    background: linear-gradient(90deg, #2a2a6a 0%, #3a3a9a 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 1.2rem 1.5rem;
+}
+
+.response-header h3 {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    margin: 0;
+    display: flex;
+    align-items: center;
+}
+
+.response-header h3 .ai-title {
+    font-size: 1.4rem;
+    background: linear-gradient(90deg, #fff 0%, #aadcff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.model-badge {
+    font-size: 0.65rem;
+    background: rgba(0, 102, 204, 0.2);
+    color: #7fbfff;
+    padding: 2px 8px;
+    border-radius: 12px;
+    margin-left: 10px;
+    font-weight: 500;
+    border: 1px solid rgba(127, 191, 255, 0.3);
 }
 
 .response-container {
-    position: relative;
-    background: rgba(13, 17, 23, 0.8);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    padding: 1.5rem;
-    min-height: 40vh;
-    max-height: 50vh;
+    background: rgba(10, 15, 25, 0.95);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 2rem;
+    min-height: 50vh;
+    max-height: 60vh;
     overflow-y: auto;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    line-height: 1.6;
+    font-family: 'Inter', system-ui, sans-serif;
+    line-height: 1.7;
+    position: relative;
+    backdrop-filter: blur(8px);
 }
 
 .response-content {
     white-space: pre-wrap;
     word-wrap: break-word;
-    padding-right: 2rem;
+    padding: 1.5rem;
+    font-size: 1rem;
+    color: #e0f0ff;
 }
 
+/* Enhanced Copy Button */
 .copy-btn {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    color: #ffffff;
-    padding: 5px 10px;
-    border-radius: 4px;
-    font-size: 0.8rem;
-    transition: all 0.3s ease;
-    z-index: 10;
+    top: 15px;
+    right: 15px;
+    background: rgba(127, 191, 255, 0.1);
+    border: 1px solid rgba(127, 191, 255, 0.3);
+    color: #7fbfff;
+    padding: 8px 15px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    backdrop-filter: blur(4px);
 }
 
 .copy-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
+    background: rgba(127, 191, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 15px rgba(127, 191, 255, 0.1);
 }
 
 .copy-btn:active {
     transform: translateY(0);
+    background: rgba(127, 191, 255, 0.15);
 }
 
-/* Markdown-like formatting for AI responses */
+.copy-btn i {
+    transition: transform 0.3s ease;
+}
+
+.copy-btn:hover i {
+    transform: scale(1.1);
+}
+
+/* Enhanced Typography */
 .response-content strong {
-    color: #ffffff;
+    color: #7fbfff;
     font-weight: 600;
 }
 
 .response-content em {
-    color: #b8c2cc;
+    color: #aac8e4;
     font-style: italic;
 }
 
 .response-content code {
-    background: rgba(0, 69, 255, 0.1);
-    padding: 2px 4px;
-    border-radius: 4px;
-    font-family: 'Courier New', Courier, monospace;
-    color: #00c3ff;
+    background: rgba(0, 51, 102, 0.3);
+    padding: 3px 6px;
+    border-radius: 5px;
+    font-family: 'Fira Code', 'Courier New', monospace;
+    color: #7fbfff;
+    font-size: 0.9em;
+    border: 1px solid rgba(127, 191, 255, 0.2);
 }
 
 .response-content pre {
-    background: rgba(0, 0, 0, 0.3);
-    padding: 10px;
-    border-radius: 6px;
+    background: rgba(0, 20, 40, 0.6);
+    padding: 1.2rem;
+    border-radius: 8px;
+    border: 1px solid rgba(127, 191, 255, 0.1);
+    margin: 1rem 0;
     overflow-x: auto;
 }
 
 .response-content a {
-    color: #4a9eff;
+    color: #7fbfff;
     text-decoration: none;
+    border-bottom: 1px solid rgba(127, 191, 255, 0.3);
+    transition: all 0.3s ease;
 }
 
 .response-content a:hover {
-    text-decoration: underline;
+    color: #aadcff;
+    border-bottom-color: #7fbfff;
 }
 
+/* Loading Animation */
 .response-content.loading {
     position: relative;
-    color: transparent;
+    min-height: 100px;
 }
 
 .response-content.loading::after {
-    content: "Thinking...";
+    content: "Processing query with DeepSeek-R1...";
     position: absolute;
-    top: 0;
-    left: 0;
-    color: #fff;
-    animation: pulse 1.5s infinite;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    color: #7fbfff;
+    font-size: 1.1rem;
+    font-weight: 500;
+    animation: thinking 1.5s infinite;
+    white-space: nowrap;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 10px 20px;
+    border-radius: 8px;
+    backdrop-filter: blur(4px);
 }
 
-@keyframes pulse {
-    0% { opacity: 0.5; }
-    50% { opacity: 1; }
-    100% { opacity: 0.5; }
-}
-@keyframes loadingPulse {
+@keyframes thinking {
     0% { opacity: 0.6; }
     50% { opacity: 1; }
     100% { opacity: 0.6; }
 }
 
-.response-content.loading::after {
-    animation: loadingPulse 1.5s infinite;
-    content: "Processing...";
-    position: absolute;
-    left: 50%;
-    transform: translateX(-50%);
-    font-style: italic;
-    color: #888;
+/* Header Animation */
+.response-header {
+    animation: headerFloat 6s ease-in-out infinite;
+}
+
+@keyframes headerFloat {
+    0% { transform: translateY(0); }
+    50% { transform: translateY(-3px); }
+    100% { transform: translateY(0); }
 }
 /*Ai End*/
