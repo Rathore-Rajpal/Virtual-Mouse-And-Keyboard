@@ -477,6 +477,7 @@ pre {
 .response-header h3 .ai-title {
     font-size: 1.4rem;
     background: linear-gradient(90deg, #fff 0%, #aadcff 100%);
+    background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
