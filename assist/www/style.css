@@ -541,4 +541,38 @@ pre {
     text-decoration: underline;
 }
 
+.response-content.loading {
+    position: relative;
+    color: transparent;
+}
+
+.response-content.loading::after {
+    content: "Thinking...";
+    position: absolute;
+    top: 0;
+    left: 0;
+    color: #fff;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.5; }
+    50% { opacity: 1; }
+    100% { opacity: 0.5; }
+}
+@keyframes loadingPulse {
+    0% { opacity: 0.6; }
+    50% { opacity: 1; }
+    100% { opacity: 0.6; }
+}
+
+.response-content.loading::after {
+    animation: loadingPulse 1.5s infinite;
+    content: "Processing...";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-style: italic;
+    color: #888;
+}
 /*Ai End*/

@@ -23,6 +23,7 @@ def speak(text):
     eel.receiverText(text)
     engine.runAndWait()
 
+
 def takecommand():
     r = sr.Recognizer()
     with sr.Microphone() as source:
@@ -230,17 +231,30 @@ def allCommands(message=1):
             eel.toggleContactsSection(True)
             
         else:
-            speak("This command is forwarded to ai bot, do you want to continue?")
+            speak("This command is forwarded to AI bot, do you want to continue?")
             confirmation = takecommand()
             print(confirmation)
             if "yes" in confirmation or "sure" in confirmation or "okay" in confirmation:
                 eel.DisplayMessage("Handling 'AI Bot' command")
                 print("Handling 'AI Bot' command")
                 from assist.Engine.features import chatBot
-                chatBot(query)
+                
+                # Show loading state before starting processing
+                eel.showResponseSection("Processing your request...")
+                
+                try:
+                    # Get and display response
+                    response = chatBot(query)
+                    
+                    # Update UI with formatted response
+                    eel.updateResponseContent(response)
+                    
+                except Exception as e:
+                    eel.updateResponseContent(f"Error: {str(e)}")
+                    speak("Sorry, I encountered an error processing your request")
+                    
             else:
                 speak("Okay, let me know if you need anything else.")
-    
     except Exception as e:
         print(f"Error in allCommands: {e}")  # Detailed error message for debugging
 

@@ -504,6 +504,9 @@
                         toast.show();
                     });
                 }
+                document.getElementById('responseSection').querySelector('.btn-close').addEventListener('click', () => {
+                    document.querySelector('.response-content').innerHTML = '';
+                });
             </script>
 </body>
 

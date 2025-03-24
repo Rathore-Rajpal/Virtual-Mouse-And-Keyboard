@@ -231,16 +231,26 @@ def chatBot(query):
     global stop_flag
     user_input = query.lower()
     
-    chatbot = hugchat.ChatBot(cookie_path="assist\\Engine\\cookies.json")
-    id = chatbot.new_conversation()
-    chatbot.change_conversation(id)
-    
-    response = chatbot.chat(user_input)
-    print(response)
-    speak(response)
-    
-    return response
-
+    try:
+        # Show loading state
+        eel.showResponseSection("Generating response...")
+        
+        chatbot = hugchat.ChatBot(cookie_path="assist\\Engine\\cookies.json")
+        id = chatbot.new_conversation()
+        chatbot.change_conversation(id)
+        
+        response = chatbot.chat(user_input)
+        print(response)
+        speak(response)
+        
+        # Return formatted response
+        return response
+        
+    except Exception as e:
+        error_msg = f"Error: {str(e)}"
+        print(error_msg)
+        speak("An error occurred while processing your request")
+        return error_msg
         
 def google_search(query):
      search_term = query.replace("search", "").replace("on google", "").replace("on internet", "").strip()

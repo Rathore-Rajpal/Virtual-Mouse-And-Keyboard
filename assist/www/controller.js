@@ -135,56 +135,32 @@ $(document).ready(function () {
         show ? bsOffcanvas.show() : bsOffcanvas.hide();
     }
 
-    eel.expose(toggleContactsSection);
+   // Add these functions to your existing JavaScript
+eel.expose(showResponseSection);
+function showResponseSection(initialContent) {
+    const responseSection = document.getElementById('responseSection');
+    const responseContent = document.querySelector('.response-content');
+    
+    // Show loading state
+    responseContent.innerHTML = formatResponse(initialContent);
+    responseContent.classList.add('loading');
+    
+    // Open the panel
+    new bootstrap.Offcanvas(responseSection).show();
+}
 
-    eel.expose(js_alert);
-    async function js_alert(message) {
-        return confirm(message); // Return true if "OK" is clicked, false if "Cancel"
+eel.expose(updateResponseContent);
+function updateResponseContent(content) {
+    const responseContent = document.querySelector('.response-content');
+    responseContent.innerHTML = formatResponse(content);
+    responseContent.classList.remove('loading');
+    
+    // Keep panel open
+    const responseSection = document.getElementById('responseSection');
+    if (!bootstrap.Offcanvas.getInstance(responseSection)) {
+        new bootstrap.Offcanvas(responseSection).show();
     }
-
-    // Expose function to update response content
-    eel.expose(updateResponseContent);
-    function updateResponseContent(response) {
-        const responseSection = document.getElementById('responseSection');
-        const responseElement = responseSection.querySelector('.response-content');
-
-        // Format response with markdown-like styling
-        const formattedResponse = formatResponse(response);
-        responseElement.innerHTML = formattedResponse;
-
-        // Show section after content is updated
-        setTimeout(() => {
-            const bsOffcanvas = new bootstrap.Offcanvas(responseSection);
-            bsOffcanvas.show();
-        }, 100);
-    }
-
-    // Format response text (basic markdown support)
-    function formatResponse(text) {
-        // Convert **bold** to <strong>
-        text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        // Convert *italic* to <em>
-        text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
-        // Convert `code` to <code>
-        text = text.replace(/`(.*?)`/g, '<code>$1</code>');
-        // Convert links
-        text = text.replace(/https?:\/\/[^\s]+/g, '<a href="$&" target="_blank">$&</a>');
-        // Convert newlines to <br>
-        text = text.replace(/\n/g, '<br>');
-        return text;
-    }
-
-    // Copy response to clipboard
-    function copyResponse() {
-        const responseElement = document.querySelector('.response-content');
-        const text = responseElement.innerText;
-
-        navigator.clipboard.writeText(text).then(() => {
-            // Show toast notification
-            const toast = new bootstrap.Toast(document.getElementById('responseToast'));
-            toast.show();
-        });
-    }
+}
 
 
 
