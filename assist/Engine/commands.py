@@ -205,7 +205,7 @@ def allCommands(message=1):
             file_path = r'assist\Engine\ImageBot\index.html'
             webbrowser.open(file_path)
             python_interpreter = r'C:\VirtualMouseProject\envjarvis\Scripts\python.exe'
-            subprocess.run([python_interpreter, r'assist\Engine\ImageBot\app.py'])
+            subprocess.Popen([python_interpreter, r'assist\Engine\ImageBot\app.py'], creationflags=subprocess.CREATE_NEW_CONSOLE)
             
             
         elif "start code master" in query or "launch code master" in query:
@@ -214,7 +214,7 @@ def allCommands(message=1):
             file_path = r'assist\Engine\CodingBuddy\index.html'
             webbrowser.open(file_path)
             python_interpreter = r'C:\VirtualMouseProject\envjarvis\Scripts\python.exe'
-            subprocess.run([python_interpreter, r'assist\Engine\CodingBuddy\app.py'])
+            subprocess.Popen([python_interpreter, r'assist\Engine\CodingBuddy\app.py'], creationflags=subprocess.CREATE_NEW_CONSOLE)
             
         elif "start virtual mouse" in query or "launch virtual mouse" in query:
             speak("Launching virtual mouse")
