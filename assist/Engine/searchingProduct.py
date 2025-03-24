@@ -1,5 +1,5 @@
 import webbrowser
-import urllib.parse # For URL encoding
+import urllib.parse  # For URL encoding
 from assist.Engine.commands import speak
 
 def search_product(query):
@@ -16,8 +16,11 @@ def search_product(query):
     # Find the website name by matching from the end
     for website in supported_websites:
         if website in query:
-            # Extract the product name by splitting before the website name
-            product_name = query.split("search for")[1].split(f"on {website}")[0].strip()
+            # Extract the product name by splitting based on the website name
+            if "search for" in query:
+                product_name = query.split("search for")[1].split(f"on {website}")[0].strip()
+            else:
+                product_name = query.split(f"on {website}")[0].strip().replace("search", "")
             website_name = website
             break
     else:
@@ -28,7 +31,7 @@ def search_product(query):
     # Dictionary to store base URLs for different websites
     search_urls = {
         "amazon": "https://www.amazon.in/s?k=",
-        "myntra": "https://www.myntra.com/",
+        "myntra": "https://www.myntra.com/what?search?q=",
         "flipkart": "https://www.flipkart.com/search?q=",
         "ebay": "https://www.ebay.com/sch/i.html?_nkw=",
         "snapdeal": "https://www.snapdeal.com/search?keyword=",
@@ -57,4 +60,3 @@ def search_product(query):
 
     # Open the search URL in the web browser
     webbrowser.open(search_url)
-

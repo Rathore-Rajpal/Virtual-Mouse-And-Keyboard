@@ -4,6 +4,6 @@ from plyer import notification
 
 notification.notify(
     title="Reminder",
-    message="where is a meeting",
+    message="there is a meeting",
     timeout=10
 )

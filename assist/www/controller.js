@@ -137,17 +137,55 @@ $(document).ready(function () {
 
     eel.expose(toggleContactsSection);
 
-    // Function to toggle the contacts section
-    function toggleContactsSection(show) {
-        const contactsSection = document.getElementById('contactsCanvas');
-        const bsOffcanvas = new bootstrap.Offcanvas(contactsSection);
-
-        if (show) {
-            bsOffcanvas.show(); // Show the contacts offcanvas
-        } else {
-            bsOffcanvas.hide(); // Hide the contacts offcanvas
-        }
+    eel.expose(js_alert);
+    async function js_alert(message) {
+        return confirm(message); // Return true if "OK" is clicked, false if "Cancel"
     }
+
+    // Expose function to update response content
+    eel.expose(updateResponseContent);
+    function updateResponseContent(response) {
+        const responseSection = document.getElementById('responseSection');
+        const responseElement = responseSection.querySelector('.response-content');
+
+        // Format response with markdown-like styling
+        const formattedResponse = formatResponse(response);
+        responseElement.innerHTML = formattedResponse;
+
+        // Show section after content is updated
+        setTimeout(() => {
+            const bsOffcanvas = new bootstrap.Offcanvas(responseSection);
+            bsOffcanvas.show();
+        }, 100);
+    }
+
+    // Format response text (basic markdown support)
+    function formatResponse(text) {
+        // Convert **bold** to <strong>
+        text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+        // Convert *italic* to <em>
+        text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+        // Convert `code` to <code>
+        text = text.replace(/`(.*?)`/g, '<code>$1</code>');
+        // Convert links
+        text = text.replace(/https?:\/\/[^\s]+/g, '<a href="$&" target="_blank">$&</a>');
+        // Convert newlines to <br>
+        text = text.replace(/\n/g, '<br>');
+        return text;
+    }
+
+    // Copy response to clipboard
+    function copyResponse() {
+        const responseElement = document.querySelector('.response-content');
+        const text = responseElement.innerText;
+
+        navigator.clipboard.writeText(text).then(() => {
+            // Show toast notification
+            const toast = new bootstrap.Toast(document.getElementById('responseToast'));
+            toast.show();
+        });
+    }
+
 
 
 });

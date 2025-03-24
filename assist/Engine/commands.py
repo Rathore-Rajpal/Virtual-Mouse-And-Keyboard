@@ -76,7 +76,7 @@ def allCommands(message=1):
                 from assist.Engine.features import PlayYoutube
                 PlayYoutube(query)
         
-        elif any(kw in query for kw in ["send message", "call", "video call", "send a message"]):
+        elif any(kw in query for kw in ["send message", "voice call", "video call", "send a message","call"]):
             print("Handling WhatsApp command")
             from assist.Engine.features import findContact, whatsApp
             flag = ""
@@ -90,7 +90,7 @@ def allCommands(message=1):
                     query = takecommand()
                     print(f"Message to send: {query}")
                 
-                elif "phone call" in query:
+                elif "phone call" in query or "call" in query or "voice call" in query:
                     flag = 'call'
                 
                 elif "video call" in query:
@@ -228,11 +228,18 @@ def allCommands(message=1):
             
         elif "conatcts table" in query:
             eel.toggleContactsSection(True)
-
             
         else:
-            from assist.Engine.features import chatBot
-            chatBot(query)
+            speak("This command is forwarded to ai bot, do you want to continue?")
+            confirmation = takecommand()
+            print(confirmation)
+            if "yes" in confirmation or "sure" in confirmation or "okay" in confirmation:
+                eel.DisplayMessage("Handling 'AI Bot' command")
+                print("Handling 'AI Bot' command")
+                from assist.Engine.features import chatBot
+                chatBot(query)
+            else:
+                speak("Okay, let me know if you need anything else.")
     
     except Exception as e:
         print(f"Error in allCommands: {e}")  # Detailed error message for debugging

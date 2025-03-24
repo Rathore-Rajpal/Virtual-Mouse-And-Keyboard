@@ -293,39 +293,103 @@ svg {
 
 /*Face auth end*/
 
+/*Email Start*/
+
 .email-canvas {
-    background-color: #191919;
-    /* Similar to chat-canvas background */
+    background-color: #1a1a2e;
+    background-image: linear-gradient(135deg, #0f0f2d 0%, #1a1a2e 50%, #16213e 100%);
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.email-canvas .offcanvas-header {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 1.5rem;
+}
+
+.email-canvas .offcanvas-title {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #ffffff; /* Ensured white color for visibility */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .email-canvas .offcanvas-body {
-    color: white;
+    color: #e0e0e0;
+    padding: 2rem;
+}
+
+.email-canvas .card {
+    background: rgba(13, 17, 23, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
 }
 
 .email-canvas .card-header {
-    background-color: #0045ff;
+    background: linear-gradient(90deg, #0045ff 0%, #0088ff 100%);
+    padding: 1.5rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.email-canvas .card-header h5 {
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    color: #ffffff; /* Explicit white color for header title */
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    margin: 0;
 }
 
 .email-canvas .card-body {
-    background-color: #0dcaf014;
-    color: white;
+    background: rgba(13, 17, 23, 0.6);
+    padding: 2rem;
+    color: #e0e0e0;
+}
+
+.email-canvas .form-label {
+    font-weight: 500;
+    color: #b8c2cc;
+    margin-bottom: 0.5rem;
 }
 
 .email-canvas input {
-    background-color: #222;
-    color: white;
-    border: 1px solid #444;
+    background-color: rgba(30, 35, 42, 0.8);
+    color: #ffffff; /* Ensured white text in input fields */
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    padding: 12px 15px;
+    transition: all 0.3s ease;
+}
+
+.email-canvas input::placeholder {
+    color: rgba(255, 255, 255, 0.4); /* Lighter placeholder for better visibility */
 }
 
 .email-canvas input:focus {
-    border-color: cyan;
-    box-shadow: none;
+    background-color: rgba(40, 45, 52, 0.8);
+    border-color: rgba(0, 195, 255, 0.5);
+    box-shadow: 0 0 0 3px rgba(0, 195, 255, 0.2);
+    outline: none;
+    color: #ffffff; /* Ensured white text when focused */
+}
+
+#submitEmail {
+    background: linear-gradient(90deg, #0045ff 0%, #0088ff 100%);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+    color: white; /* Ensured button text is white */
+    transition: all 0.3s ease;
 }
 
 .btn-close {
     filter: invert(100%);
+    opacity: 0.8;
 }
 
+/*Email End*/
 .code-canvas {
     background: #2d2d2d;
     color: #ccc;
@@ -384,3 +448,97 @@ pre {
     padding-left: 40px;
 }
 
+/*Ai Start*/
+
+.response-canvas {
+    background-color: #1a1a2e;
+    background-image: linear-gradient(135deg, #0f0f2d 0%, #1a1a2e 50%, #16213e 100%);
+    color: #e0e0e0;
+    height: 60vh;
+    max-height: 60vh;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.response-header {
+    background: linear-gradient(90deg, #3a3a8a 0%, #4a4ac2 100%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.response-container {
+    position: relative;
+    background: rgba(13, 17, 23, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 8px;
+    padding: 1.5rem;
+    min-height: 40vh;
+    max-height: 50vh;
+    overflow-y: auto;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+}
+
+.response-content {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    padding-right: 2rem;
+}
+
+.copy-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.copy-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-1px);
+}
+
+.copy-btn:active {
+    transform: translateY(0);
+}
+
+/* Markdown-like formatting for AI responses */
+.response-content strong {
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.response-content em {
+    color: #b8c2cc;
+    font-style: italic;
+}
+
+.response-content code {
+    background: rgba(0, 69, 255, 0.1);
+    padding: 2px 4px;
+    border-radius: 4px;
+    font-family: 'Courier New', Courier, monospace;
+    color: #00c3ff;
+}
+
+.response-content pre {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 10px;
+    border-radius: 6px;
+    overflow-x: auto;
+}
+
+.response-content a {
+    color: #4a9eff;
+    text-decoration: none;
+}
+
+.response-content a:hover {
+    text-decoration: underline;
+}
+
+/*Ai End*/

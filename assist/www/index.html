@@ -397,9 +397,37 @@
                 </div>
             </div>
         </section>
-         
-        
 
+        <section class="offcanvas offcanvas-top response-canvas" tabindex="-1" id="responseSection"
+            aria-labelledby="responseSectionLabel">
+            <div class="offcanvas-header response-header">
+                <h3 class="offcanvas-title" id="responseSectionLabel">
+                    <i class="fas fa-robot me-2"></i>AI Response
+                </h3>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
+                    aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body p-4">
+                <div class="response-container shadow-lg">
+                    <button class="copy-btn" onclick="copyResponse()">
+                        <i class="fas fa-copy me-2"></i>Copy
+                    </button>
+                    <div class="response-content">
+                        <!-- AI response will be inserted here -->
+                    </div>
+                </div>
+                <div class="toast align-items-center text-white bg-success border-0 position-fixed top-0 end-0 m-3"
+                    role="alert" aria-live="assertive" aria-atomic="true" id="responseToast">
+                    <div class="d-flex">
+                        <div class="toast-body">
+                            Response copied to clipboard!
+                        </div>
+                        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"
+                            aria-label="Close"></button>
+                    </div>
+                </div>
+            </div>
+        </section>
 
     </div>
     <div class="offcanvas offcanvas-start chat-canvas" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
@@ -446,6 +474,33 @@
                     const code = document.querySelector('.code-container code').innerText;
                     navigator.clipboard.writeText(code).then(() => {
                         const toast = new bootstrap.Toast(document.getElementById('copyToast'));
+                        toast.show();
+                    });
+                }
+            </script>
+            <script>
+                function formatResponse(text) {
+                    // Convert **bold** to <strong>
+                    text = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    // Convert *italic* to <em>
+                    text = text.replace(/\*(.*?)\*/g, '<em>$1</em>');
+                    // Convert `code` to <code>
+                    text = text.replace(/`(.*?)`/g, '<code>$1</code>');
+                    // Convert links
+                    text = text.replace(/https?:\/\/[^\s]+/g, '<a href="$&" target="_blank">$&</a>');
+                    // Convert newlines to <br>
+                    text = text.replace(/\n/g, '<br>');
+                    return text;
+                }
+
+                // Copy response to clipboard
+                function copyResponse() {
+                    const responseElement = document.querySelector('.response-content');
+                    const text = responseElement.innerText;
+
+                    navigator.clipboard.writeText(text).then(() => {
+                        // Show toast notification
+                        const toast = new bootstrap.Toast(document.getElementById('responseToast'));
                         toast.show();
                     });
                 }
