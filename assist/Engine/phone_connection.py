@@ -1,6 +1,17 @@
 import re
 import time
+import eel
 import pyautogui as autogui
+import pyttsx3
+
+def speak(text):
+    text = str(text)
+    engine = pyttsx3.init()
+    voices = engine.getProperty('voices')
+    engine.setProperty('voice', voices[0].id)
+    engine.setProperty('rate', 174)
+    engine.say(text)
+    engine.runAndWait()
 
 
 def call_on_mobile(query):
@@ -24,14 +35,16 @@ def call_on_mobile(query):
         autogui.press('enter')
         for i in range(13):
             autogui.press('tab')
+        time.sleep(1)
+        speak(f"Calling {name} on your phone")
         autogui.sleep(1)
         autogui.press('enter')
         
-def message_on_phone(query):
+def message_on_phone(query,message):
     pattern = r'(?:message|send a message to) ([a-zA-Z ]+) (?:to|on) my (?:phone|iphone)'
     match = re.search(pattern, query.lower())
     time.sleep(1)
-    message = "Hello how are you"
+    msg = message
     if match:
         name = match.group(1)
         autogui.press('win')
@@ -47,11 +60,12 @@ def message_on_phone(query):
         autogui.write(name)
         autogui.press('enter')
         time.sleep(1)
-        autogui.write(message)
+        autogui.write(msg)
         autogui.press('enter')
+        speak(f"Message {msg} sent to {name} on your phone")
         
 #message_on_phone("send a message to sister to my phone")
-call_on_mobile("make a call to sister on my phone")
+#call_on_mobile("make a call to sister on my phone")
     
         
   

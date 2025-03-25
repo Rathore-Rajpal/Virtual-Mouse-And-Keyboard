@@ -77,6 +77,19 @@ def allCommands(message=1):
                 from assist.Engine.features import PlayYoutube
                 PlayYoutube(query)
         
+        elif any(kw in query for kw in ["call", "make a call", "dial"]) and ("on my phone" in query or "on my iphone" in query):
+            print("Handling phone call command")
+            from assist.Engine.phone_connection import call_on_mobile
+            call_on_mobile(query)
+
+        elif any(kw in query for kw in ["send a message", "text", "send message"]) and ("on my phone" in query or "on my iphone" in query):
+            print("Handling phone message command")
+            from assist.Engine.phone_connection import message_on_phone
+            speak("What is the message ?")
+            message = takecommand()
+            message_on_phone(query,message)
+
+        # Then handle WhatsApp commands (MOVED DOWN)
         elif any(kw in query for kw in ["send message", "voice call", "video call", "send a message","call"]):
             print("Handling WhatsApp command")
             from assist.Engine.features import findContact, whatsApp
@@ -227,8 +240,6 @@ def allCommands(message=1):
             eel.ShowHood()
             subprocess.run(['python','virtual_ketboard.html.py'])
             
-        elif "conatcts table" in query:
-            eel.toggleContactsSection(True)
             
         else:
             speak("This command is forwarded to AI bot, do you want to continue?")
